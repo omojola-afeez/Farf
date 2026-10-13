@@ -10,15 +10,16 @@ import OccasionStack from '@/components/home/OccasionStack';
 import CollectionPanels from '@/components/home/CollectionPanels';
 import WhyFarf from '@/components/home/WhyFarf';
 import FaqTabs from '@/components/home/FaqTabs';
-import { getFeatured, getCategoryCovers } from '@/lib/data';
+import StoreBanner from '@/components/home/StoreBanner';
+import { getFeatured } from '@/lib/data';
 
 export async function getServerSideProps({ res }) {
   res.setHeader('Cache-Control', 'public, s-maxage=60, stale-while-revalidate=300');
-  const [featured, covers] = await Promise.all([getFeatured(8), getCategoryCovers()]);
-  return { props: { featured, covers } };
+  const featured = await getFeatured(8);
+  return { props: { featured } };
 }
 
-export default function Home({ featured, covers }) {
+export default function Home({ featured }) {
   return (
     <>
       <PageHead />
@@ -29,7 +30,7 @@ export default function Home({ featured, covers }) {
         text="Good homes run on small things done well. A pan that heats evenly, a bag that lasts the term, a screwdriver that is where you left it."
       />
       <OccasionStack />
-      <CollectionPanels covers={covers} />
+      <CollectionPanels />
 
       {featured.length > 0 && (
         <section className="container-page py-12">
@@ -49,6 +50,7 @@ export default function Home({ featured, covers }) {
 
       <WhyFarf />
       <FaqTabs />
+      <StoreBanner />
       <Newsletter />
     </>
   );

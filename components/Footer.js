@@ -8,9 +8,7 @@ export default function Footer() {
     <footer className="glass-dark relative mt-16 overflow-hidden !rounded-none !border-x-0 !border-b-0 text-slate-200">
       <div className="container-page grid gap-8 py-10 sm:grid-cols-2 lg:grid-cols-4">
         <div>
-          <div className="rounded-lg bg-white p-2 inline-block">
-            <Logo />
-          </div>
+          <Logo light />
           <p className="mt-3 text-sm text-slate-300">{siteConfig.tagline}.</p>
         </div>
         <div>

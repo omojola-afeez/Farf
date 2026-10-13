@@ -12,9 +12,9 @@ const SLOTS = [
 ];
 
 const FALLBACK = [
-  { image: '/images/hero-kitchen.jpg', ratio: 388 / 157, href: '/shop/utensils', label: 'Kitchen', sub: 'Utensils and storage', tone: 'bg-white/20 text-white' },
-  { image: '/images/hero-school.jpg', ratio: 353 / 195, href: '/shop/school', label: 'School', sub: 'Bags and stationery', tone: 'bg-[#FFF8F1]/95 text-slate-900' },
-  { image: '/images/hero-diy.jpg', ratio: 359 / 158, href: '/shop/diy', label: 'DIY', sub: 'Tools and hardware', tone: 'bg-teal-900/60 text-white' },
+  { image: '/images/hero-kitchen.jpg', ratio: 509 / 377, href: '/shop/utensils', label: 'Kitchen', sub: 'Utensils and storage', tone: 'bg-white/20 text-white' },
+  { image: '/images/hero-school.jpg', ratio: 507 / 377, href: '/shop/school', label: 'School', sub: 'Bags and stationery', tone: 'bg-[#FFF8F1]/95 text-slate-900' },
+  { image: '/images/hero-diy.jpg', ratio: 510 / 377, href: '/shop/diy', label: 'DIY', sub: 'Tools and hardware', tone: 'bg-teal-900/60 text-white' },
 ];
 
 function PhotoFloater({ product }) {

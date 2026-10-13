@@ -1,35 +1,40 @@
 import Link from 'next/link';
 import { useEffect, useRef, useState } from 'react';
 import Icon from '../Icon';
-import ProductImage from '../ProductImage';
 
 const PANELS = [
   {
     slug: 'utensils',
-    icon: 'chef-hat',
     title: 'Home and kitchen',
     text: 'Cookware, utensils, storage and everyday kitchen tools.',
-    tone: 'bg-teal-700/80',
+    image: '/images/panel-kitchen.jpg',
+    alt: 'A teal pot, ceramic bowls and wooden spoons on a kitchen counter',
+    tint: 'from-teal-900/90 via-teal-900/25 to-transparent',
+    width: 509,
   },
   {
     slug: 'school',
-    icon: 'backpack',
     title: 'School supplies',
     text: 'Bags, lunch boxes, stationery and accessories for every term.',
-    tone: 'bg-orange-700/80',
+    image: '/images/panel-school.jpg',
+    alt: 'Notebooks, pencils, scissors and a ruler on an orange background',
+    tint: 'from-orange-800/90 via-orange-800/25 to-transparent',
+    width: 507,
   },
   {
     slug: 'diy',
-    icon: 'toolbox',
     title: 'DIY and tools',
     text: 'Hand tools, fixings and hardware for repairs and projects.',
-    tone: 'bg-slate-800/80',
+    image: '/images/panel-diy.jpg',
+    alt: 'A hammer, pliers, screwdriver and tape measure on a wooden workbench',
+    tint: 'from-slate-900/90 via-slate-900/30 to-transparent',
+    width: 510,
   },
 ];
 
 // Accordion on large screens (hover, focus or click opens a panel, autoplay every 3.5s).
 // Stacked cards below lg, where every panel shows its text.
-export default function CollectionPanels({ covers = {} }) {
+export default function CollectionPanels() {
   const [active, setActive] = useState(0);
   const paused = useRef(false);
 
@@ -51,52 +56,43 @@ export default function CollectionPanels({ covers = {} }) {
       </div>
 
       <div
-        className="flex flex-col gap-4 lg:h-[460px] lg:flex-row"
+        className="flex flex-col gap-4 lg:h-[480px] lg:flex-row"
         onMouseEnter={() => (paused.current = true)}
         onMouseLeave={() => (paused.current = false)}
         onFocus={() => (paused.current = true)}
         onBlur={() => (paused.current = false)}
       >
-        {PANELS.map((p, i) => {
-          const cover = covers[p.slug];
-          return (
-            <Link
-              key={p.slug}
-              href={`/shop/${p.slug}`}
-              onMouseEnter={() => setActive(i)}
-              onFocus={() => setActive(i)}
-              className={`panel group relative flex min-h-[220px] flex-col justify-between overflow-hidden rounded-[2.5rem] border border-white/30 p-8 text-white shadow-xl backdrop-blur-2xl ${p.tone} ${
-                active === i ? 'active' : ''
-              }`}
-            >
-              <div className="flex items-start justify-between gap-4">
-                <Icon name={p.icon} className="h-12 w-12 text-[#FFF8F1]" />
-                {cover?.image?.url && (
-                  <div className="cover glass w-28 rotate-3 animate-float rounded-2xl p-2 sm:w-36">
-                    <div className="overflow-hidden rounded-xl">
-                      <ProductImage
-                        image={cover.image}
-                        name={cover.name}
-                        category={p.slug}
-                        ratio={cover.image.width && cover.image.height ? Math.min(Math.max(cover.image.width / cover.image.height, 0.75), 1.4) : 1}
-                        width={400}
-                      />
-                    </div>
-                  </div>
-                )}
+        {PANELS.map((p, i) => (
+          <Link
+            key={p.slug}
+            href={`/shop/${p.slug}`}
+            onMouseEnter={() => setActive(i)}
+            onFocus={() => setActive(i)}
+            className={`panel group relative block min-h-[340px] overflow-hidden rounded-[2.5rem] border border-white/40 text-white shadow-xl lg:min-h-0 ${
+              active === i ? 'active' : ''
+            }`}
+          >
+            {/* eslint-disable-next-line @next/next/no-img-element */}
+            <img
+              src={p.image}
+              alt={p.alt}
+              width={p.width}
+              height={1024}
+              loading="lazy"
+              className="absolute inset-0 h-full w-full object-cover transition-transform duration-700 group-hover:scale-105"
+            />
+            <div className={`absolute inset-0 bg-gradient-to-t ${p.tint}`} />
+            <div className="relative z-10 flex h-full min-h-[340px] flex-col justify-end p-8 lg:min-h-0">
+              <h3 className="text-2xl font-semibold !text-white md:text-3xl">{p.title}</h3>
+              <div className="panel-desc">
+                <p className="mt-3 max-w-sm text-lg font-light text-white/90">{p.text}</p>
+                <span className="mt-4 inline-flex items-center gap-2 font-semibold">
+                  Shop now <Icon name="arrow-right-linear" className="h-5 w-5" />
+                </span>
               </div>
-              <div>
-                <h3 className="text-2xl font-semibold !text-white">{p.title}</h3>
-                <div className="panel-desc">
-                  <p className="mt-3 max-w-sm text-lg font-light text-white/85">{p.text}</p>
-                  <span className="mt-4 inline-flex items-center gap-2 font-semibold">
-                    Shop now <Icon name="arrow-right-linear" className="h-5 w-5" />
-                  </span>
-                </div>
-              </div>
-            </Link>
-          );
-        })}
+            </div>
+          </Link>
+        ))}
       </div>
     </section>
   );
