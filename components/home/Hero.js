@@ -2,6 +2,7 @@ import Link from 'next/link';
 import { useEffect, useRef } from 'react';
 import { formatPrice } from '@/lib/format';
 import ProductImage from '../ProductImage';
+import StoreBanner from './StoreBanner';
 
 // Three floating slots. A slot shows a real product photo when one exists,
 // and a plain collection tile when it does not.
@@ -85,13 +86,9 @@ export default function Hero({ featured }) {
   return (
     <section id="home" className="container-page pt-6 sm:pt-10">
       <div ref={root} className="glass-teal relative rounded-[2.5rem] p-6 text-white sm:p-10 lg:p-14">
-        <div className="grid items-center gap-10 lg:grid-cols-[1.1fr_1fr]">
+        <div className="grid items-center gap-10 xl:grid-cols-[1.1fr_1fr]">
           <div>
-            <div className="animate-glow inline-flex items-center gap-2 rounded-full border border-[#F26B1D]/60 bg-white/10 px-4 py-2 text-xs font-medium tracking-wide">
-              <span className="h-2 w-2 animate-pulse rounded-full bg-[#F26B1D]" />
-              Home, school and DIY in one store
-            </div>
-
+            <StoreBanner />
             <h1 className="mt-6 text-4xl font-semibold leading-[1.1] tracking-tight text-white sm:text-6xl">
               Everything your{' '}
               <span className="bg-gradient-to-r from-[#F26B1D] to-[#FFF8F1] bg-clip-text text-transparent">household</span>{' '}
@@ -112,7 +109,7 @@ export default function Hero({ featured }) {
             </div>
           </div>
 
-          <div className="relative hidden h-[500px] lg:block">
+          <div className="relative hidden h-[500px] xl:block">
             {SLOTS.map((slot, i) => (
               <div key={i} className={`absolute ${slot.pos}`} data-depth={slot.depth} style={{ transition: 'transform 0.3s ease-out' }}>
                 <div className={slot.anim} style={{ animationDelay: `${i * 0.8}s` }}>
@@ -124,7 +121,7 @@ export default function Hero({ featured }) {
         </div>
 
         {/* On phones the floating cards become a simple row below the copy. */}
-        <div className="mt-8 grid grid-cols-3 gap-3 lg:hidden">
+        <div className="mt-8 grid grid-cols-3 gap-3 xl:hidden">
           {[0, 1, 2].map((i) =>
             photos[i] ? (
               <div key={i} className="animate-float" style={{ animationDelay: `${i * 0.6}s` }}>

@@ -10,7 +10,6 @@ import OccasionStack from '@/components/home/OccasionStack';
 import CollectionPanels from '@/components/home/CollectionPanels';
 import WhyFarf from '@/components/home/WhyFarf';
 import FaqTabs from '@/components/home/FaqTabs';
-import StoreBanner from '@/components/home/StoreBanner';
 import { getFeatured } from '@/lib/data';
 
 export async function getServerSideProps({ res }) {
@@ -50,7 +49,6 @@ export default function Home({ featured }) {
 
       <WhyFarf />
       <FaqTabs />
-      <StoreBanner />
       <Newsletter />
     </>
   );
