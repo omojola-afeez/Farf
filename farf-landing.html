@@ -1,0 +1,607 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>FARF | Home, school and DIY essentials</title>
+  <meta name="description" content="Kitchen tools, school supplies and home-improvement basics in one store. Shop by collection or by occasion.">
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500&family=Manrope:wght@400;500;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://unpkg.com/aos@2.3.1/dist/aos.css">
+
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          fontFamily: { sans: ['Inter', 'sans-serif'], heading: ['Manrope', 'sans-serif'] }
+        }
+      }
+    };
+  </script>
+
+  <style>
+    /* Palette: #0F766E teal, #115E59 dark teal, #F26B1D orange, #C2410C button orange, #FFF8F1 cream, #1F2937 text */
+    body { font-family: 'Inter', sans-serif; }
+    h1, h2, h3, h4, h5, h6, .font-heading { font-family: 'Manrope', sans-serif; }
+
+    ::-webkit-scrollbar { width: 8px; }
+    ::-webkit-scrollbar-track { background: #FFF8F1; }
+    ::-webkit-scrollbar-thumb { background: #F26B1D; }
+
+    @keyframes marquee { 0% { transform: translateX(0%); } 100% { transform: translateX(-50%); } }
+    @keyframes float {
+      0% { transform: translateY(0px) rotate(2deg); }
+      50% { transform: translateY(-15px) rotate(1deg); }
+      100% { transform: translateY(0px) rotate(2deg); }
+    }
+    @keyframes glow {
+      0%, 100% { box-shadow: 0 0 0 0 rgba(242, 107, 29, 0); }
+      50% { box-shadow: 0 0 24px 4px rgba(242, 107, 29, 0.35); }
+    }
+    .animate-marquee { animation: marquee 25s linear infinite; }
+    .animate-float { animation: float 6s ease-in-out infinite; }
+    .animate-float-slow { animation: float 8s ease-in-out infinite; }
+    .animate-glow { animation: glow 3s ease-in-out infinite; }
+
+    .hero-mesh {
+      background:
+        radial-gradient(circle at 15% 20%, rgba(242, 107, 29, 0.35), transparent 40%),
+        radial-gradient(circle at 85% 75%, rgba(20, 184, 166, 0.35), transparent 45%),
+        #115E59;
+    }
+
+    .glow-card { position: relative; overflow: hidden; }
+    .glow-card::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      border-radius: inherit;
+      background: radial-gradient(300px circle at var(--mouse-x, 50%) var(--mouse-y, 50%), rgba(242, 107, 29, 0.22), transparent 60%);
+      opacity: 0;
+      transition: opacity 0.3s ease;
+      pointer-events: none;
+    }
+    .glow-card:hover::before { opacity: 1; }
+    .glow-card > * { position: relative; z-index: 1; }
+
+    @media (min-width: 1024px) {
+      .panel { flex: 1 1 0%; transition: flex 0.7s cubic-bezier(0.22, 1, 0.36, 1); }
+      .panel.active { flex: 3 1 0%; }
+      .panel .panel-desc {
+        max-height: 0; opacity: 0; overflow: hidden;
+        transition: max-height 0.6s cubic-bezier(0.22, 1, 0.36, 1), opacity 0.4s ease;
+      }
+      .panel.active .panel-desc { max-height: 240px; opacity: 1; }
+    }
+
+    .watermark {
+      font-size: 24vw;
+      line-height: 0.8;
+      letter-spacing: -0.04em;
+      color: rgba(255, 248, 241, 0.05);
+      white-space: nowrap;
+      user-select: none;
+      pointer-events: none;
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      .animate-float, .animate-float-slow, .animate-glow { animation: none; }
+    }
+  </style>
+</head>
+
+<body class="bg-[#FFF8F1] text-[#1F2937] antialiased">
+
+  <!-- NAVIGATION -->
+  <nav class="sticky top-0 z-50 backdrop-blur-md bg-[#FFF8F1]/85 border-b border-[#0F766E]/10">
+    <div class="max-w-7xl mx-auto px-6 h-20 flex items-center justify-between">
+      <a href="#home" class="flex items-center gap-2" aria-label="FARF home">
+        <span class="w-10 h-10 rounded-xl bg-[#F26B1D] text-[#1F2937] font-heading font-semibold text-xl flex items-center justify-center">F</span>
+        <span class="font-heading font-semibold text-2xl tracking-tight text-[#115E59]">FARF</span>
+      </a>
+
+      <div class="hidden md:flex items-center gap-8 text-sm font-medium text-[#1F2937]/80">
+        <a href="#collections" class="hover:text-[#0F766E] transition-colors">Collections</a>
+        <a href="#occasions" class="hover:text-[#0F766E] transition-colors">Occasions</a>
+        <a href="#why-farf" class="hover:text-[#0F766E] transition-colors">Why FARF</a>
+        <a href="#faq" class="hover:text-[#0F766E] transition-colors">FAQ</a>
+      </div>
+
+      <div class="flex items-center gap-2">
+        <a href="/shop" class="hidden sm:inline-flex items-center gap-2 bg-[#C2410C] text-white px-5 py-2.5 rounded-full text-sm font-medium hover:bg-[#9A3412] transition-colors duration-300">
+          Shop now
+          <iconify-icon icon="solar:arrow-right-up-linear" class="text-base"></iconify-icon>
+        </a>
+        <button id="menu-btn" type="button" class="md:hidden w-11 h-11 rounded-xl flex items-center justify-center hover:bg-[#0F766E]/10" aria-expanded="false" aria-controls="mobile-menu" aria-label="Open menu">
+          <iconify-icon icon="solar:hamburger-menu-linear" class="text-2xl"></iconify-icon>
+        </button>
+      </div>
+    </div>
+
+    <div id="mobile-menu" class="hidden md:hidden border-t border-[#0F766E]/10 bg-[#FFF8F1]">
+      <div class="max-w-7xl mx-auto px-6 py-2 flex flex-col">
+        <a href="#collections" class="py-3 text-lg font-medium border-b border-[#0F766E]/10">Collections</a>
+        <a href="#occasions" class="py-3 text-lg font-medium border-b border-[#0F766E]/10">Occasions</a>
+        <a href="#why-farf" class="py-3 text-lg font-medium border-b border-[#0F766E]/10">Why FARF</a>
+        <a href="#faq" class="py-3 text-lg font-medium border-b border-[#0F766E]/10">FAQ</a>
+        <a href="/shop" class="my-4 inline-flex items-center justify-center gap-2 bg-[#C2410C] text-white px-6 py-3 rounded-full font-medium">Shop now</a>
+      </div>
+    </div>
+  </nav>
+
+  <!-- HERO -->
+  <section id="home" class="relative hero-mesh text-white overflow-hidden">
+    <div class="max-w-7xl mx-auto px-6 py-24 lg:py-32 grid lg:grid-cols-2 gap-16 items-center">
+      <div>
+        <div class="inline-flex items-center gap-2 px-4 py-2 rounded-full border border-[#F26B1D]/50 bg-white/5 text-[#FFF8F1] text-xs font-medium tracking-wide animate-glow" data-aos="fade-down">
+          <span class="w-2 h-2 rounded-full bg-[#F26B1D] animate-pulse"></span>
+          Home, school and DIY in one store
+        </div>
+
+        <h1 class="mt-8 text-5xl md:text-7xl font-semibold tracking-tight leading-[1.1]" data-aos="fade-up" data-aos-delay="100">
+          Everything your
+          <span class="bg-clip-text text-transparent bg-gradient-to-r from-[#F26B1D] to-[#FFF8F1]">household</span>
+          needs, in one place.
+        </h1>
+
+        <p class="mt-6 text-lg md:text-xl text-white/80 font-light max-w-xl" data-aos="fade-up" data-aos-delay="200">
+          Kitchen tools, school supplies and home-improvement basics at everyday prices. Shop by collection, or by what you are getting ready for.
+        </p>
+
+        <div class="mt-10 flex flex-col sm:flex-row gap-4" data-aos="fade-up" data-aos-delay="300">
+          <a href="/shop" class="inline-flex items-center justify-center gap-2 bg-[#C2410C] text-white px-8 py-4 rounded-full font-medium hover:bg-[#9A3412] transition-colors duration-300">
+            Shop all products
+            <iconify-icon icon="solar:arrow-right-linear" class="text-lg"></iconify-icon>
+          </a>
+          <a href="#occasions" class="inline-flex items-center justify-center gap-2 border border-white/40 px-8 py-4 rounded-full font-medium hover:bg-white/10 transition-colors duration-300">
+            Shop by occasion
+          </a>
+        </div>
+      </div>
+
+      <div class="relative hidden lg:block h-[420px]" aria-hidden="true">
+        <div class="absolute top-0 left-6 w-60 rounded-[2rem] bg-white/10 backdrop-blur-md border border-white/20 p-6 animate-float">
+          <iconify-icon icon="solar:chef-hat-bold-duotone" class="text-5xl text-[#F26B1D]"></iconify-icon>
+          <p class="mt-4 font-heading font-medium text-xl">Kitchen</p>
+          <p class="text-sm text-white/70 font-light">Utensils and storage</p>
+        </div>
+        <div class="absolute top-28 right-0 w-60 rounded-[2.5rem] bg-[#FFF8F1] text-[#1F2937] p-6 animate-float-slow">
+          <iconify-icon icon="solar:backpack-bold-duotone" class="text-5xl text-[#C2410C]"></iconify-icon>
+          <p class="mt-4 font-heading font-medium text-xl">School</p>
+          <p class="text-sm text-[#1F2937]/70 font-light">Bags and stationery</p>
+        </div>
+        <div class="absolute bottom-0 left-16 w-60 rounded-[2rem] bg-[#0F766E] border border-white/20 p-6 animate-float">
+          <iconify-icon icon="solar:toolbox-bold-duotone" class="text-5xl text-[#FFF8F1]"></iconify-icon>
+          <p class="mt-4 font-heading font-medium text-xl">DIY</p>
+          <p class="text-sm text-white/70 font-light">Tools and hardware</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- MARQUEE -->
+  <section class="bg-[#0F766E] py-5 overflow-hidden" aria-label="Store promises">
+    <div class="flex w-max animate-marquee">
+      <div class="flex shrink-0 items-center gap-14 pr-14 text-[#FFF8F1] text-sm font-medium tracking-widest uppercase">
+        <span class="flex items-center gap-3"><iconify-icon icon="solar:delivery-bold-duotone" class="text-2xl"></iconify-icon>Free delivery on qualifying orders</span>
+        <span class="flex items-center gap-3"><iconify-icon icon="solar:restart-bold-duotone" class="text-2xl"></iconify-icon>Easy returns</span>
+        <span class="flex items-center gap-3"><iconify-icon icon="solar:shield-check-bold-duotone" class="text-2xl"></iconify-icon>Secure checkout</span>
+        <span class="flex items-center gap-3"><iconify-icon icon="solar:map-point-bold-duotone" class="text-2xl"></iconify-icon>Order tracking</span>
+        <span class="flex items-center gap-3"><iconify-icon icon="solar:delivery-bold-duotone" class="text-2xl"></iconify-icon>Free delivery on qualifying orders</span>
+        <span class="flex items-center gap-3"><iconify-icon icon="solar:restart-bold-duotone" class="text-2xl"></iconify-icon>Easy returns</span>
+        <span class="flex items-center gap-3"><iconify-icon icon="solar:shield-check-bold-duotone" class="text-2xl"></iconify-icon>Secure checkout</span>
+        <span class="flex items-center gap-3"><iconify-icon icon="solar:map-point-bold-duotone" class="text-2xl"></iconify-icon>Order tracking</span>
+      </div>
+      <div class="flex shrink-0 items-center gap-14 pr-14 text-[#FFF8F1] text-sm font-medium tracking-widest uppercase" aria-hidden="true">
+        <span class="flex items-center gap-3"><iconify-icon icon="solar:delivery-bold-duotone" class="text-2xl"></iconify-icon>Free delivery on qualifying orders</span>
+        <span class="flex items-center gap-3"><iconify-icon icon="solar:restart-bold-duotone" class="text-2xl"></iconify-icon>Easy returns</span>
+        <span class="flex items-center gap-3"><iconify-icon icon="solar:shield-check-bold-duotone" class="text-2xl"></iconify-icon>Secure checkout</span>
+        <span class="flex items-center gap-3"><iconify-icon icon="solar:map-point-bold-duotone" class="text-2xl"></iconify-icon>Order tracking</span>
+        <span class="flex items-center gap-3"><iconify-icon icon="solar:delivery-bold-duotone" class="text-2xl"></iconify-icon>Free delivery on qualifying orders</span>
+        <span class="flex items-center gap-3"><iconify-icon icon="solar:restart-bold-duotone" class="text-2xl"></iconify-icon>Easy returns</span>
+        <span class="flex items-center gap-3"><iconify-icon icon="solar:shield-check-bold-duotone" class="text-2xl"></iconify-icon>Secure checkout</span>
+        <span class="flex items-center gap-3"><iconify-icon icon="solar:map-point-bold-duotone" class="text-2xl"></iconify-icon>Order tracking</span>
+      </div>
+    </div>
+  </section>
+
+  <!-- MANIFESTO (scrub text) -->
+  <section class="py-32">
+    <div class="max-w-5xl mx-auto px-6">
+      <p class="text-sm font-medium tracking-widest uppercase text-[#0F766E]" data-aos="fade-up">What FARF is</p>
+      <p id="scrub-text" class="mt-6 font-heading text-3xl md:text-5xl font-medium tracking-tight leading-[1.2]">
+        A plain, trustworthy store for the things a household actually needs, organised around the moments that make you need them.
+      </p>
+    </div>
+  </section>
+
+  <!-- OCCASIONS: sticky stack, earlier cards scale down and darken -->
+  <section id="occasions" class="bg-[#115E59] text-white py-24">
+    <div class="max-w-5xl mx-auto px-6">
+      <div class="max-w-2xl mb-16" data-aos="fade-up">
+        <p class="text-sm font-medium tracking-widest uppercase text-[#FFF8F1]/80">Shop by occasion</p>
+        <h2 class="mt-4 text-4xl md:text-5xl font-semibold tracking-tight leading-[1.1]">Start with the moment, not the aisle.</h2>
+      </div>
+
+      <div class="space-y-10 pb-24">
+        <a href="/shop?occasion=new-term" class="stack-card sticky top-28 block rounded-[2.5rem] p-8 md:p-12 bg-white/10 border border-white/15 min-h-[320px]" data-aos="fade-up">
+          <div class="flex flex-col md:flex-row gap-8">
+            <div class="w-14 h-14 shrink-0 rounded-full border border-white/50 flex items-center justify-center font-heading font-medium">01</div>
+            <div>
+              <h3 class="text-2xl md:text-3xl font-semibold tracking-tight">New school term</h3>
+              <p class="mt-4 text-white/75 font-light text-lg max-w-xl">Bags, lunch boxes, stationery and accessories, gathered in one list so nothing gets missed on the first morning.</p>
+              <span class="mt-6 inline-flex items-center gap-2 font-medium text-[#FFF8F1]">Shop this list <iconify-icon icon="solar:arrow-right-linear"></iconify-icon></span>
+            </div>
+          </div>
+        </a>
+
+        <a href="/shop?occasion=new-apartment" class="stack-card sticky top-36 block rounded-[2.5rem] p-8 md:p-12 bg-[#C2410C] text-white min-h-[320px]" data-aos="fade-up">
+          <div class="flex flex-col md:flex-row gap-8">
+            <div class="w-14 h-14 shrink-0 rounded-full border border-white/60 flex items-center justify-center font-heading font-medium">02</div>
+            <div>
+              <h3 class="text-2xl md:text-3xl font-semibold tracking-tight">New apartment</h3>
+              <p class="mt-4 text-white/85 font-light text-lg max-w-xl">Cookware, storage, cleaning basics and a few tools, so the first week in a new place is easier.</p>
+              <span class="mt-6 inline-flex items-center gap-2 font-medium">Shop this list <iconify-icon icon="solar:arrow-right-linear"></iconify-icon></span>
+            </div>
+          </div>
+        </a>
+
+        <a href="/shop?occasion=weekend-fix" class="stack-card sticky top-44 block rounded-[2.5rem] p-8 md:p-12 bg-[#FFF8F1] text-[#1F2937] min-h-[320px]" data-aos="fade-up">
+          <div class="flex flex-col md:flex-row gap-8">
+            <div class="w-14 h-14 shrink-0 rounded-full border border-[#1F2937]/40 flex items-center justify-center font-heading font-medium">03</div>
+            <div>
+              <h3 class="text-2xl md:text-3xl font-semibold tracking-tight">Weekend fix-it project</h3>
+              <p class="mt-4 text-[#1F2937]/75 font-light text-lg max-w-xl">Hand tools, fixings and hardware for the job you have been putting off.</p>
+              <span class="mt-6 inline-flex items-center gap-2 font-medium text-[#0F766E]">Shop this list <iconify-icon icon="solar:arrow-right-linear"></iconify-icon></span>
+            </div>
+          </div>
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <!-- COLLECTIONS: expanding panels -->
+  <section id="collections" class="py-32">
+    <div class="max-w-7xl mx-auto px-6">
+      <div class="max-w-2xl mb-12" data-aos="fade-up">
+        <p class="text-sm font-medium tracking-widest uppercase text-[#0F766E]">Collections</p>
+        <h2 class="mt-4 text-4xl md:text-5xl font-semibold tracking-tight leading-[1.1]">Three collections, one checkout.</h2>
+      </div>
+
+      <div id="collection-panels" class="flex flex-col lg:flex-row gap-4 lg:h-[460px]" data-aos="fade-up">
+        <a href="/shop/utensils" class="panel active relative rounded-[2rem] p-8 bg-[#0F766E] text-white flex flex-col justify-between min-h-[220px]">
+          <div class="flex items-center justify-between">
+            <iconify-icon icon="solar:chef-hat-bold-duotone" class="text-5xl text-[#FFF8F1]"></iconify-icon>
+            <iconify-icon icon="solar:arrow-right-up-linear" class="text-2xl"></iconify-icon>
+          </div>
+          <div>
+            <h3 class="text-2xl md:text-3xl font-semibold tracking-tight">Household Utensils</h3>
+            <p class="panel-desc mt-3 text-white/85 font-light">Kitchen tools, cookware, storage and cleaning essentials.</p>
+          </div>
+        </a>
+
+        <a href="/shop/school" class="panel relative rounded-[2rem] p-8 bg-[#C2410C] text-white flex flex-col justify-between min-h-[220px]">
+          <div class="flex items-center justify-between">
+            <iconify-icon icon="solar:backpack-bold-duotone" class="text-5xl text-[#FFF8F1]"></iconify-icon>
+            <iconify-icon icon="solar:arrow-right-up-linear" class="text-2xl"></iconify-icon>
+          </div>
+          <div>
+            <h3 class="text-2xl md:text-3xl font-semibold tracking-tight">Back to School</h3>
+            <p class="panel-desc mt-3 text-white/90 font-light">Bags, stationery, lunch boxes, uniforms and accessories.</p>
+          </div>
+        </a>
+
+        <a href="/shop/diy" class="panel relative rounded-[2rem] p-8 bg-[#1F2937] text-white flex flex-col justify-between min-h-[220px]">
+          <div class="flex items-center justify-between">
+            <iconify-icon icon="solar:toolbox-bold-duotone" class="text-5xl text-[#F26B1D]"></iconify-icon>
+            <iconify-icon icon="solar:arrow-right-up-linear" class="text-2xl"></iconify-icon>
+          </div>
+          <div>
+            <h3 class="text-2xl md:text-3xl font-semibold tracking-tight">DIY &amp; Home Equipment</h3>
+            <p class="panel-desc mt-3 text-white/80 font-light">Tools, hardware, fixtures and home-improvement basics.</p>
+          </div>
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <!-- WHY FARF: bento with cursor glow -->
+  <section id="why-farf" class="py-24 bg-white">
+    <div class="max-w-7xl mx-auto px-6">
+      <div class="max-w-2xl mb-12" data-aos="fade-up">
+        <p class="text-sm font-medium tracking-widest uppercase text-[#0F766E]">Why FARF</p>
+        <h2 class="mt-4 text-4xl md:text-5xl font-semibold tracking-tight leading-[1.1]">Built to be easy to shop.</h2>
+      </div>
+
+      <div class="grid lg:grid-cols-12 gap-6">
+        <div class="glow-card lg:col-span-7 rounded-[2.5rem] bg-[#FFF8F1] p-8 md:p-10 border border-[#0F766E]/10" data-aos="fade-up">
+          <iconify-icon icon="solar:tag-price-bold-duotone" class="text-4xl text-[#C2410C]"></iconify-icon>
+          <h3 class="mt-4 text-2xl font-semibold tracking-tight">Priced for everyday use</h3>
+          <p class="mt-3 text-[#1F2937]/70 font-light max-w-lg">Practical products at honest prices, with no luxury markup.</p>
+        </div>
+
+        <div class="glow-card lg:col-span-5 rounded-[2.5rem] bg-[#0F766E] text-white p-8 md:p-10" data-aos="fade-up" data-aos-delay="100">
+          <iconify-icon icon="solar:smartphone-bold-duotone" class="text-4xl text-[#FFF8F1]"></iconify-icon>
+          <h3 class="mt-4 text-2xl font-semibold tracking-tight">Made for phones</h3>
+          <p class="mt-3 text-white/80 font-light">Large tap targets and a simple cart, because most people shop on their phone.</p>
+        </div>
+
+        <div class="glow-card lg:col-span-5 rounded-[2.5rem] bg-[#1F2937] text-white p-8 md:p-10" data-aos="fade-up">
+          <iconify-icon icon="solar:clipboard-check-bold-duotone" class="text-4xl text-[#F26B1D]"></iconify-icon>
+          <h3 class="mt-4 text-2xl font-semibold tracking-tight">Honest product info</h3>
+          <p class="mt-3 text-white/75 font-light">Stock, sizes and colors shown only when they are real.</p>
+        </div>
+
+        <div class="glow-card lg:col-span-7 rounded-[2.5rem] bg-[#FFF8F1] p-8 md:p-10 border border-[#0F766E]/10" data-aos="fade-up" data-aos-delay="100">
+          <iconify-icon icon="solar:map-point-bold-duotone" class="text-4xl text-[#0F766E]"></iconify-icon>
+          <h3 class="mt-4 text-2xl font-semibold tracking-tight">Track every order</h3>
+          <p class="mt-3 text-[#1F2937]/70 font-light max-w-lg">Enter your order number and email to see where your order is.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- FAQ tabs -->
+  <section id="faq" class="py-24">
+    <div class="max-w-4xl mx-auto px-6">
+      <div class="mb-10" data-aos="fade-up">
+        <p class="text-sm font-medium tracking-widest uppercase text-[#0F766E]">FAQ</p>
+        <h2 class="mt-4 text-4xl md:text-5xl font-semibold tracking-tight leading-[1.1]">Quick answers.</h2>
+      </div>
+
+      <div role="tablist" aria-label="Questions" class="flex flex-wrap gap-3" data-aos="fade-up">
+        <button role="tab" id="tab-delivery" aria-selected="true" aria-controls="panel-delivery" class="faq-tab px-6 py-3 rounded-full text-sm font-medium bg-[#0F766E] text-white transition-colors duration-300">Delivery</button>
+        <button role="tab" id="tab-returns" aria-selected="false" aria-controls="panel-returns" class="faq-tab px-6 py-3 rounded-full text-sm font-medium bg-white text-[#1F2937] border border-[#0F766E]/20 transition-colors duration-300">Returns</button>
+        <button role="tab" id="tab-payment" aria-selected="false" aria-controls="panel-payment" class="faq-tab px-6 py-3 rounded-full text-sm font-medium bg-white text-[#1F2937] border border-[#0F766E]/20 transition-colors duration-300">Payment</button>
+      </div>
+
+      <div class="mt-6 rounded-[2rem] bg-white p-8 shadow-sm" data-aos="fade-up">
+        <div role="tabpanel" id="panel-delivery" aria-labelledby="tab-delivery" class="faq-panel space-y-5">
+          <div>
+            <h3 class="text-lg font-semibold tracking-tight">How much is delivery?</h3>
+            <p class="mt-1 text-[#1F2937]/70 font-light">The delivery fee and the free-delivery threshold are shown in your cart before you pay.</p>
+          </div>
+          <div>
+            <h3 class="text-lg font-semibold tracking-tight">How long does it take?</h3>
+            <p class="mt-1 text-[#1F2937]/70 font-light">The delivery window is on every product page and in the Terms and returns page.</p>
+          </div>
+        </div>
+
+        <div role="tabpanel" id="panel-returns" aria-labelledby="tab-returns" class="faq-panel hidden space-y-5">
+          <div>
+            <h3 class="text-lg font-semibold tracking-tight">Can I return something?</h3>
+            <p class="mt-1 text-[#1F2937]/70 font-light">Yes, unused items can be returned within the return window shown in the Terms and returns page.</p>
+          </div>
+          <div>
+            <h3 class="text-lg font-semibold tracking-tight">What if an item arrives damaged?</h3>
+            <p class="mt-1 text-[#1F2937]/70 font-light">Contact us with your order number and we will arrange a replacement or refund.</p>
+          </div>
+        </div>
+
+        <div role="tabpanel" id="panel-payment" aria-labelledby="tab-payment" class="faq-panel hidden space-y-5">
+          <div>
+            <h3 class="text-lg font-semibold tracking-tight">How do I pay?</h3>
+            <p class="mt-1 text-[#1F2937]/70 font-light">Checkout runs through Stripe. You enter your address and card details on the Stripe page.</p>
+          </div>
+          <div>
+            <h3 class="text-lg font-semibold tracking-tight">Can I order on WhatsApp?</h3>
+            <p class="mt-1 text-[#1F2937]/70 font-light">Where it is offered, the cart has an Order on WhatsApp button.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- CTA AND NEWSLETTER -->
+  <section class="py-24 bg-[#0F766E] text-white">
+    <div class="max-w-5xl mx-auto px-6 grid lg:grid-cols-2 gap-12 items-center">
+      <div data-aos="fade-right">
+        <h2 class="text-4xl md:text-5xl font-semibold tracking-tight leading-[1.1]">Ready to stock up?</h2>
+        <p class="mt-4 text-lg text-white/80 font-light">Browse the full range, or join the list for restocks and back-to-school offers.</p>
+        <a href="/shop" class="mt-8 inline-flex items-center gap-2 bg-[#C2410C] text-white px-8 py-4 rounded-full font-medium hover:bg-[#9A3412] transition-colors duration-300">
+          Shop all products
+          <iconify-icon icon="solar:arrow-right-linear" class="text-lg"></iconify-icon>
+        </a>
+      </div>
+
+      <form id="newsletter-form" class="rounded-[2.5rem] bg-[#FFF8F1] text-[#1F2937] p-8" data-aos="fade-left" novalidate>
+        <label for="nl-email" class="block text-sm font-medium mb-2">Email address</label>
+        <input id="nl-email" name="email" type="email" required autocomplete="email" placeholder="you@example.com" class="w-full rounded-2xl bg-white border border-[#0F766E]/20 px-4 py-3 focus:outline-none focus:ring-2 focus:ring-[#0F766E]">
+        <div class="hidden" aria-hidden="true">
+          <label for="nl-website">Website</label>
+          <input id="nl-website" name="website" tabindex="-1" autocomplete="off">
+        </div>
+        <button type="submit" class="mt-4 w-full inline-flex items-center justify-center gap-2 bg-[#0F766E] text-white px-8 py-4 rounded-full font-medium hover:bg-[#115E59] transition-colors duration-300">Subscribe</button>
+        <p id="nl-status" role="status" class="mt-3 text-sm font-medium text-[#0F766E]"></p>
+      </form>
+    </div>
+  </section>
+
+  <!-- FOOTER -->
+  <footer class="relative bg-[#1F2937] text-white overflow-hidden">
+    <div class="max-w-7xl mx-auto px-6 pt-20 pb-10 grid md:grid-cols-3 gap-10 relative z-10">
+      <div>
+        <div class="flex items-center gap-2">
+          <span class="w-10 h-10 rounded-xl bg-[#F26B1D] text-[#1F2937] font-heading font-semibold text-xl flex items-center justify-center">F</span>
+          <span class="font-heading font-semibold text-2xl tracking-tight">FARF</span>
+        </div>
+        <p class="mt-4 text-white/60 font-light max-w-xs">Home, school and DIY essentials.</p>
+      </div>
+      <div>
+        <h3 class="font-heading font-medium text-[#F26B1D]">Shop</h3>
+        <ul class="mt-4 space-y-2 text-white/70 font-light">
+          <li><a href="/shop/utensils" class="hover:text-white">Household Utensils</a></li>
+          <li><a href="/shop/school" class="hover:text-white">Back to School</a></li>
+          <li><a href="/shop/diy" class="hover:text-white">DIY &amp; Home Equipment</a></li>
+        </ul>
+      </div>
+      <div>
+        <h3 class="font-heading font-medium text-[#F26B1D]">Help</h3>
+        <ul class="mt-4 space-y-2 text-white/70 font-light">
+          <li><a href="/track" class="hover:text-white">Track your order</a></li>
+          <li><a href="/faq" class="hover:text-white">FAQ</a></li>
+          <li><a href="/terms" class="hover:text-white">Terms and returns</a></li>
+          <li><a href="/contact" class="hover:text-white">Contact us</a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="relative z-10 max-w-7xl mx-auto px-6 pb-8 text-sm text-white/50 font-light">
+      <p>&copy; <span id="year"></span> FARF. All rights reserved.</p>
+    </div>
+    <div class="watermark font-heading font-semibold text-center -mb-4" aria-hidden="true">FARF</div>
+  </footer>
+
+  <script src="https://code.iconify.design/iconify-icon/1.0.7/iconify-icon.min.js"></script>
+  <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/@studio-freight/lenis@1.0.33/dist/lenis.min.js"></script>
+
+  <script>
+    /* ---------- Settings you can change ---------- */
+    var NEWSLETTER_ENDPOINT = '/api/newsletter';  // Matches the FARF Next.js project. Change if hosted elsewhere.
+
+    var reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+    AOS.init({ once: true, duration: 800, offset: 50 });
+    document.getElementById('year').textContent = new Date().getFullYear();
+
+    /* ---------- Mobile menu ---------- */
+    (function () {
+      var btn = document.getElementById('menu-btn');
+      var menu = document.getElementById('mobile-menu');
+      function toggle(open) {
+        menu.classList.toggle('hidden', !open);
+        btn.setAttribute('aria-expanded', open ? 'true' : 'false');
+        btn.setAttribute('aria-label', open ? 'Close menu' : 'Open menu');
+      }
+      btn.addEventListener('click', function () { toggle(menu.classList.contains('hidden')); });
+      menu.querySelectorAll('a').forEach(function (a) { a.addEventListener('click', function () { toggle(false); }); });
+    })();
+
+    /* ---------- Lenis + GSAP ---------- */
+    gsap.registerPlugin(ScrollTrigger);
+    if (!reduceMotion && window.Lenis) {
+      var lenis = new Lenis({ duration: 1.2, easing: function (t) { return Math.min(1, 1.001 - Math.pow(2, -10 * t)); } });
+      lenis.on('scroll', ScrollTrigger.update);
+      gsap.ticker.add(function (time) { lenis.raf(time * 1000); });
+      gsap.ticker.lagSmoothing(0);
+
+      document.querySelectorAll('a[href^="#"]').forEach(function (a) {
+        a.addEventListener('click', function (e) {
+          var id = a.getAttribute('href');
+          if (id.length > 1 && document.querySelector(id)) {
+            e.preventDefault();
+            lenis.scrollTo(id, { offset: -80 });
+          }
+        });
+      });
+    }
+
+    /* ---------- Scrub text ---------- */
+    (function () {
+      var el = document.getElementById('scrub-text');
+      var words = el.textContent.trim().split(/\s+/);
+      el.innerHTML = words.map(function (w) { return '<span class="scrub-word">' + w + '</span>'; }).join(' ');
+      var spans = el.querySelectorAll('.scrub-word');
+      if (reduceMotion) return;
+      gsap.set(spans, { opacity: 0.2 });
+      gsap.to(spans, {
+        opacity: 1, stagger: 0.1, ease: 'none',
+        scrollTrigger: { trigger: el, start: 'top 80%', end: 'bottom 45%', scrub: true }
+      });
+    })();
+
+    /* ---------- Sticky stack: earlier cards scale down and darken ---------- */
+    (function () {
+      if (reduceMotion) return;
+      var cards = gsap.utils.toArray('.stack-card');
+      cards.forEach(function (card, i) {
+        if (i === cards.length - 1) return;
+        gsap.to(card, {
+          scale: 1 - (cards.length - 1 - i) * 0.04,
+          filter: 'brightness(0.7)',
+          ease: 'none',
+          scrollTrigger: { trigger: cards[i + 1], start: 'top 75%', end: 'top 20%', scrub: true }
+        });
+      });
+    })();
+
+    /* ---------- Glow cards ---------- */
+    document.querySelectorAll('.glow-card').forEach(function (card) {
+      card.addEventListener('mousemove', function (e) {
+        var r = card.getBoundingClientRect();
+        card.style.setProperty('--mouse-x', (e.clientX - r.left) + 'px');
+        card.style.setProperty('--mouse-y', (e.clientY - r.top) + 'px');
+      });
+    });
+
+    /* ---------- Collection panels ---------- */
+    (function () {
+      var wrap = document.getElementById('collection-panels');
+      var panels = Array.prototype.slice.call(wrap.querySelectorAll('.panel'));
+      var current = 0, timer = null;
+      var desktop = window.matchMedia('(min-width: 1024px)');
+
+      function activate(i) {
+        current = i;
+        panels.forEach(function (p, idx) { p.classList.toggle('active', idx === i); });
+      }
+      function stop() { if (timer) { clearInterval(timer); timer = null; } }
+      function start() {
+        stop();
+        if (!desktop.matches || reduceMotion) return;
+        timer = setInterval(function () { activate((current + 1) % panels.length); }, 3500);
+      }
+      panels.forEach(function (p, i) {
+        p.addEventListener('mouseenter', function () { activate(i); });
+        p.addEventListener('focus', function () { activate(i); });
+      });
+      wrap.addEventListener('mouseenter', stop);
+      wrap.addEventListener('mouseleave', start);
+      wrap.addEventListener('focusin', stop);
+      wrap.addEventListener('focusout', start);
+      desktop.addEventListener('change', start);
+      start();
+    })();
+
+    /* ---------- FAQ tabs ---------- */
+    (function () {
+      var tabs = document.querySelectorAll('.faq-tab');
+      tabs.forEach(function (tab) {
+        tab.addEventListener('click', function () {
+          tabs.forEach(function (t) {
+            var on = t === tab;
+            t.setAttribute('aria-selected', on ? 'true' : 'false');
+            t.className = 'faq-tab px-6 py-3 rounded-full text-sm font-medium transition-colors duration-300 ' +
+              (on ? 'bg-[#0F766E] text-white' : 'bg-white text-[#1F2937] border border-[#0F766E]/20');
+            document.getElementById(t.getAttribute('aria-controls')).classList.toggle('hidden', !on);
+          });
+        });
+      });
+    })();
+
+    /* ---------- Newsletter ---------- */
+    (function () {
+      var form = document.getElementById('newsletter-form');
+      var status = document.getElementById('nl-status');
+      form.addEventListener('submit', function (e) {
+        e.preventDefault();
+        var data = Object.fromEntries(new FormData(form).entries());
+        if (data.website) return;
+        if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(data.email || '')) {
+          status.textContent = 'Enter a valid email address.';
+          return;
+        }
+        status.textContent = 'Subscribing...';
+        fetch(NEWSLETTER_ENDPOINT, { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ email: data.email }) })
+          .then(function (res) { if (!res.ok) throw new Error(); form.reset(); status.textContent = 'You are subscribed.'; })
+          .catch(function () { status.textContent = 'Could not subscribe right now. Please try again later.'; });
+      });
+    })();
+  </script>
+</body>
+</html>

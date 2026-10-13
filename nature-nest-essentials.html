@@ -1,0 +1,868 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Nature Nest Essentials | Rice, sugar, jaggery and pulses</title>
+  <meta name="description" content="Nature Nest Essentials supplies rice, sugar, jaggery and pulses, and packs Hampi rice for retail. Become a partner.">
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500&family=Manrope:wght@400;500;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://unpkg.com/aos@2.3.1/dist/aos.css">
+
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          fontFamily: {
+            sans: ['Inter', 'sans-serif'],
+            heading: ['Manrope', 'sans-serif']
+          }
+        }
+      }
+    };
+  </script>
+
+  <style>
+    /* Palette: #2F5D50 green, #E8D9B5 cream, #F8F6F2 off-white, #1F2937 dark text */
+    body { font-family: 'Inter', sans-serif; }
+    h1, h2, h3, h4, h5, h6, .font-heading { font-family: 'Manrope', sans-serif; }
+
+    ::-webkit-scrollbar { width: 8px; }
+    ::-webkit-scrollbar-track { background: #F8F6F2; }
+    ::-webkit-scrollbar-thumb { background: #E8D9B5; }
+
+    /* Keyframes. Marquee timing is hardcoded to 25s linear on purpose. */
+    @keyframes marquee {
+      0% { transform: translateX(0%); }
+      100% { transform: translateX(-50%); }
+    }
+    @keyframes float {
+      0% { transform: translateY(0px) rotate(2deg); }
+      50% { transform: translateY(-15px) rotate(1deg); }
+      100% { transform: translateY(0px) rotate(2deg); }
+    }
+    @keyframes glow {
+      0%, 100% { box-shadow: 0 0 0 0 rgba(232, 217, 181, 0); }
+      50% { box-shadow: 0 0 24px 4px rgba(232, 217, 181, 0.35); }
+    }
+    .animate-marquee { animation: marquee 25s linear infinite; }
+    .animate-float { animation: float 6s ease-in-out infinite; }
+    .animate-glow { animation: glow 3s ease-in-out infinite; }
+
+    /* Hero keeps background-attachment: fixed (known to be heavy on mobile). */
+    .hero-bg {
+      background-image: url('https://images.unsplash.com/photo-1596040033229-a9821ebd058d?ixlib=rb-4.0.3&auto=format&fit=crop&w=1920&q=80');
+      background-size: cover;
+      background-position: center;
+      background-attachment: fixed;
+    }
+
+    /* About section radial gradients, fixed to the viewport */
+    .about-glow {
+      background:
+        radial-gradient(circle at 12% 18%, rgba(47, 93, 80, 0.12), transparent 42%),
+        radial-gradient(circle at 88% 82%, rgba(232, 217, 181, 0.55), transparent 46%);
+      background-attachment: fixed;
+    }
+
+    /* Product cards: description and button reveal with a max-height transition */
+    .reveal-on-hover {
+      max-height: 0;
+      opacity: 0;
+      overflow: hidden;
+      transition: max-height 0.5s ease, opacity 0.5s ease;
+    }
+    .group:hover .reveal-on-hover,
+    .group:focus-within .reveal-on-hover {
+      max-height: 250px;
+      opacity: 1;
+    }
+
+    .pattern-dots {
+      background-image: radial-gradient(rgba(47, 93, 80, 0.2) 1.5px, transparent 1.5px);
+    }
+
+    /* Cursor flashlight on info blocks */
+    .glow-card { position: relative; overflow: hidden; }
+    .glow-card::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      border-radius: inherit;
+      background: radial-gradient(280px circle at var(--mouse-x, 50%) var(--mouse-y, 50%), rgba(232, 217, 181, 0.6), transparent 60%);
+      opacity: 0;
+      transition: opacity 0.3s ease;
+      pointer-events: none;
+    }
+    .glow-card:hover::before { opacity: 1; }
+    .glow-card > * { position: relative; z-index: 1; }
+
+    /* Process panels: accordion on desktop, stacked cards on smaller screens */
+    @media (min-width: 1024px) {
+      .panel { flex: 1 1 0%; transition: flex 0.7s cubic-bezier(0.22, 1, 0.36, 1); }
+      .panel.active { flex: 3 1 0%; }
+      .panel .panel-desc {
+        max-height: 0;
+        opacity: 0;
+        overflow: hidden;
+        transition: max-height 0.6s cubic-bezier(0.22, 1, 0.36, 1), opacity 0.4s ease;
+      }
+      .panel.active .panel-desc { max-height: 220px; opacity: 1; }
+    }
+
+    /* Footer watermark */
+    .watermark {
+      font-size: 17vw;
+      line-height: 0.8;
+      letter-spacing: -0.04em;
+      color: rgba(248, 246, 242, 0.05);
+      white-space: nowrap;
+      user-select: none;
+      pointer-events: none;
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      .animate-float, .animate-glow { animation: none; }
+    }
+  </style>
+</head>
+
+<body class="bg-[#F8F6F2] text-[#1F2937] antialiased">
+
+  <!-- NAVIGATION -->
+  <nav class="sticky top-0 z-50 backdrop-blur-md bg-[#F8F6F2]/80 border-b border-[#2F5D50]/10">
+    <div class="max-w-7xl mx-auto px-6 h-20 flex items-center justify-between">
+      <a href="#home" class="flex items-center gap-3">
+        <img src="https://hoirqrkdgbmvpwutwuwj.supabase.co/storage/v1/object/public/assets/assets/d0dd485f-b2b1-4dbc-9832-300ff89cdd9f_800w.png" alt="Nature Nest Essentials logo" class="h-12 w-auto object-contain">
+      </a>
+
+      <div class="hidden md:flex items-center gap-8 text-sm font-medium text-[#1F2937]/80">
+        <a href="#about" class="hover:text-[#2F5D50] transition-colors">About</a>
+        <a href="#commodities" class="hover:text-[#2F5D50] transition-colors">Commodities</a>
+        <a href="#hampi" class="hover:text-[#2F5D50] transition-colors">Hampi</a>
+        <a href="#why-us" class="hover:text-[#2F5D50] transition-colors">Why us</a>
+        <a href="#faq" class="hover:text-[#2F5D50] transition-colors">Buyer FAQ</a>
+      </div>
+
+      <a href="#contact" class="inline-flex items-center gap-2 bg-[#2F5D50] text-white px-5 py-2.5 rounded-full text-sm font-medium hover:bg-[#1F2937] transition-colors duration-300">
+        Become a Partner
+        <iconify-icon icon="solar:arrow-right-up-linear" class="text-base"></iconify-icon>
+      </a>
+    </div>
+  </nav>
+
+  <!-- HERO -->
+  <section id="home" class="relative hero-bg min-h-[90vh] flex items-center">
+    <div class="absolute inset-0 bg-black/60"></div>
+    <div class="relative z-10 max-w-7xl mx-auto px-6 py-24 w-full">
+      <div class="max-w-3xl">
+        <div class="inline-flex items-center gap-2 px-4 py-2 rounded-full border border-[#E8D9B5]/30 bg-white/5 text-[#E8D9B5] text-xs font-medium tracking-wide animate-glow" data-aos="fade-down">
+          <span class="w-2 h-2 rounded-full bg-[#E8D9B5] animate-pulse"></span>
+          Staples sourced with care
+        </div>
+
+        <h1 class="mt-8 text-5xl md:text-7xl font-semibold text-white tracking-tight leading-[1.1]" data-aos="fade-up" data-aos-delay="100">
+          <span class="bg-clip-text text-transparent bg-gradient-to-r from-[#E8D9B5] to-white">Exceptional</span>
+          rice, sugar and pulses, packed for your shelves.
+        </h1>
+
+        <p class="mt-6 text-lg md:text-xl text-white/80 font-light max-w-2xl" data-aos="fade-up" data-aos-delay="200">
+          Nature Nest Essentials supplies everyday staples to retailers and wholesale partners, and packs its own Hampi rice.
+        </p>
+
+        <div class="mt-10 flex flex-col sm:flex-row gap-4" data-aos="fade-up" data-aos-delay="300">
+          <a href="#commodities" class="inline-flex items-center justify-center gap-2 bg-[#E8D9B5] text-[#1F2937] px-8 py-4 rounded-full font-medium hover:bg-white transition-colors duration-300">
+            Explore commodities
+            <iconify-icon icon="solar:arrow-right-linear" class="text-lg"></iconify-icon>
+          </a>
+          <a href="#contact" class="inline-flex items-center justify-center gap-2 border border-white/40 text-white px-8 py-4 rounded-full font-medium hover:bg-white/10 transition-colors duration-300">
+            Request pricing
+          </a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- MARQUEE: two identical blocks so the -50% loop is seamless -->
+  <section class="bg-[#2F5D50] py-5 overflow-hidden" aria-label="Our promises">
+    <div class="flex w-max animate-marquee">
+      <div class="flex shrink-0 items-center gap-14 pr-14 text-[#E8D9B5] text-sm font-medium tracking-widest uppercase">
+        <span class="flex items-center gap-3"><iconify-icon icon="solar:shield-check-bold-duotone" class="text-2xl"></iconify-icon>Quality checked</span>
+        <span class="flex items-center gap-3"><iconify-icon icon="solar:leaf-bold-duotone" class="text-2xl"></iconify-icon>Naturally sourced</span>
+        <span class="flex items-center gap-3"><iconify-icon icon="solar:box-bold-duotone" class="text-2xl"></iconify-icon>Packed to order</span>
+        <span class="flex items-center gap-3"><iconify-icon icon="solar:global-bold-duotone" class="text-2xl"></iconify-icon>Ships worldwide</span>
+        <span class="flex items-center gap-3"><iconify-icon icon="solar:shield-check-bold-duotone" class="text-2xl"></iconify-icon>Quality checked</span>
+        <span class="flex items-center gap-3"><iconify-icon icon="solar:leaf-bold-duotone" class="text-2xl"></iconify-icon>Naturally sourced</span>
+        <span class="flex items-center gap-3"><iconify-icon icon="solar:box-bold-duotone" class="text-2xl"></iconify-icon>Packed to order</span>
+        <span class="flex items-center gap-3"><iconify-icon icon="solar:global-bold-duotone" class="text-2xl"></iconify-icon>Ships worldwide</span>
+      </div>
+      <div class="flex shrink-0 items-center gap-14 pr-14 text-[#E8D9B5] text-sm font-medium tracking-widest uppercase" aria-hidden="true">
+        <span class="flex items-center gap-3"><iconify-icon icon="solar:shield-check-bold-duotone" class="text-2xl"></iconify-icon>Quality checked</span>
+        <span class="flex items-center gap-3"><iconify-icon icon="solar:leaf-bold-duotone" class="text-2xl"></iconify-icon>Naturally sourced</span>
+        <span class="flex items-center gap-3"><iconify-icon icon="solar:box-bold-duotone" class="text-2xl"></iconify-icon>Packed to order</span>
+        <span class="flex items-center gap-3"><iconify-icon icon="solar:global-bold-duotone" class="text-2xl"></iconify-icon>Ships worldwide</span>
+        <span class="flex items-center gap-3"><iconify-icon icon="solar:shield-check-bold-duotone" class="text-2xl"></iconify-icon>Quality checked</span>
+        <span class="flex items-center gap-3"><iconify-icon icon="solar:leaf-bold-duotone" class="text-2xl"></iconify-icon>Naturally sourced</span>
+        <span class="flex items-center gap-3"><iconify-icon icon="solar:box-bold-duotone" class="text-2xl"></iconify-icon>Packed to order</span>
+        <span class="flex items-center gap-3"><iconify-icon icon="solar:global-bold-duotone" class="text-2xl"></iconify-icon>Ships worldwide</span>
+      </div>
+    </div>
+  </section>
+
+  <!-- ABOUT (video swaps in when YOUTUBE_ID is set in the script at the bottom) -->
+  <section id="about" class="relative about-glow py-24">
+    <div class="max-w-7xl mx-auto px-6 grid lg:grid-cols-2 gap-16 items-center">
+      <div data-aos="fade-right">
+        <p class="text-sm font-medium tracking-widest uppercase text-[#2F5D50]">About us</p>
+        <h2 class="mt-4 text-4xl md:text-5xl font-semibold tracking-tight leading-[1.1]">Staples you can plan around.</h2>
+        <p class="mt-6 text-lg text-[#1F2937]/70 font-light">
+          Retailers and distributors need the same grain, the same grade and the same bag every time. We work with growers and mills to supply rice, sugar, jaggery and pulses, then clean, grade and pack them to the specification you ask for.
+        </p>
+        <p class="mt-4 text-lg text-[#1F2937]/70 font-light">
+          Our own brand, Hampi, takes that process one step further and arrives ready for the shelf.
+        </p>
+        <a href="#commodities" class="mt-8 inline-flex items-center gap-2 font-medium text-[#2F5D50] hover:gap-3 transition-all duration-300">
+          See what we supply
+          <iconify-icon icon="solar:arrow-right-linear" class="text-lg"></iconify-icon>
+        </a>
+      </div>
+
+      <div class="relative" data-aos="fade-left" data-aos-delay="100">
+        <div class="absolute -inset-4 bg-[#E8D9B5]/60 rounded-[2.5rem] -rotate-2"></div>
+        <div class="relative aspect-video rounded-[2.5rem] overflow-hidden shadow-xl bg-[#1F2937]">
+          <img id="about-image" src="https://hoirqrkdgbmvpwutwuwj.supabase.co/storage/v1/object/public/assets/assets/917d6f93-fb36-439a-8c48-884b67b35381_1600w.jpg" alt="Rice from Nature Nest Essentials" class="w-full h-full object-cover">
+          <iframe id="about-video" class="hidden absolute inset-0 w-full h-full" title="Nature Nest Essentials video" src="" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- MANIFESTO: words fade in as you scroll (GSAP ScrollTrigger scrub) -->
+  <section class="py-32 bg-[#F8F6F2]">
+    <div class="max-w-5xl mx-auto px-6">
+      <p class="text-sm font-medium tracking-widest uppercase text-[#2F5D50]" data-aos="fade-up">Our approach</p>
+      <p id="scrub-text" class="mt-6 font-heading text-3xl md:text-5xl font-medium tracking-tight leading-[1.2] text-[#1F2937]">
+        We grow trust the way a good harvest grows: slowly, in the open, and one reliable order at a time.
+      </p>
+    </div>
+  </section>
+
+  <!-- JOURNEY: sticky stacking cards (top-32, top-40, top-48) -->
+  <section id="journey" class="bg-[#1F2937] py-24 text-white">
+    <div class="max-w-5xl mx-auto px-6">
+      <div class="max-w-2xl mb-16" data-aos="fade-up">
+        <p class="text-sm font-medium tracking-widest uppercase text-[#E8D9B5]">The journey</p>
+        <h2 class="mt-4 text-4xl md:text-5xl font-semibold tracking-tight leading-[1.1]">From the field to your warehouse.</h2>
+      </div>
+
+      <div class="space-y-10 pb-24">
+        <div class="sticky top-32 rounded-[2.5rem] p-8 md:p-12 bg-white/5 border border-white/10 backdrop-blur-sm min-h-[320px] flex flex-col md:flex-row gap-8" data-aos="fade-up">
+          <div class="w-14 h-14 shrink-0 rounded-full border border-[#E8D9B5]/50 flex items-center justify-center font-heading font-medium text-[#E8D9B5]">01</div>
+          <div>
+            <h3 class="text-2xl md:text-3xl font-semibold tracking-tight">Source</h3>
+            <p class="mt-4 text-white/70 font-light text-lg max-w-xl">We buy from growers and mills we know, and we agree the variety, grade and quantity with you before anything moves.</p>
+          </div>
+        </div>
+
+        <div class="sticky top-40 rounded-[2.5rem] p-8 md:p-12 bg-[#2F5D50] text-white min-h-[320px] flex flex-col md:flex-row gap-8" data-aos="fade-up">
+          <div class="w-14 h-14 shrink-0 rounded-full border border-white/50 flex items-center justify-center font-heading font-medium">02</div>
+          <div>
+            <h3 class="text-2xl md:text-3xl font-semibold tracking-tight">Clean, grade and pack</h3>
+            <p class="mt-4 text-white/80 font-light text-lg max-w-xl">Each lot is cleaned and graded, then packed in the bag size and labelling your market needs.</p>
+          </div>
+        </div>
+
+        <div class="sticky top-48 rounded-[2.5rem] p-8 md:p-12 bg-[#E8D9B5] text-[#1F2937] min-h-[320px] flex flex-col md:flex-row gap-8" data-aos="fade-up">
+          <div class="w-14 h-14 shrink-0 rounded-full border border-[#1F2937]/40 flex items-center justify-center font-heading font-medium">03</div>
+          <div>
+            <h3 class="text-2xl md:text-3xl font-semibold tracking-tight">Ship and follow up</h3>
+            <p class="mt-4 text-[#1F2937]/75 font-light text-lg max-w-xl">We prepare the paperwork, arrange shipping and stay in touch until the goods arrive and you are ready to reorder.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- CORE COMMODITIES -->
+  <section id="commodities" class="py-32">
+    <div class="max-w-7xl mx-auto px-6">
+      <div class="max-w-2xl mb-14" data-aos="fade-up">
+        <p class="text-sm font-medium tracking-widest uppercase text-[#2F5D50]">Core commodities</p>
+        <h2 class="mt-4 text-4xl md:text-5xl font-semibold tracking-tight leading-[1.1]">Four staples, done properly.</h2>
+      </div>
+
+      <div class="grid sm:grid-cols-2 lg:grid-cols-4 gap-6">
+        <!-- Rice -->
+        <div class="group relative aspect-[4/5] rounded-[2rem] overflow-hidden bg-[#1F2937]" tabindex="0" data-aos="fade-up" data-aos-delay="0">
+          <img src="https://hoirqrkdgbmvpwutwuwj.supabase.co/storage/v1/object/public/assets/assets/917d6f93-fb36-439a-8c48-884b67b35381_1600w.jpg" alt="Rice" class="absolute inset-0 w-full h-full object-cover group-hover:scale-110 transition-transform duration-700">
+          <div class="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent"></div>
+          <div class="absolute bottom-0 inset-x-0 p-6 text-white">
+            <h3 class="text-2xl font-semibold tracking-tight">Rice</h3>
+            <div class="reveal-on-hover">
+              <p class="mt-3 text-white/80 font-light text-sm">Regional rice varieties, cleaned, graded and packed to the bag size you need.</p>
+              <a href="#contact" class="mt-4 inline-flex items-center gap-2 bg-[#E8D9B5] text-[#1F2937] px-5 py-2.5 rounded-full text-sm font-medium">Enquire <iconify-icon icon="solar:arrow-right-linear"></iconify-icon></a>
+            </div>
+          </div>
+        </div>
+
+        <!-- Sugar -->
+        <div class="group relative aspect-[4/5] rounded-[2rem] overflow-hidden bg-[#1F2937]" tabindex="0" data-aos="fade-up" data-aos-delay="100">
+          <img src="https://images.unsplash.com/photo-1580915411954-282cb1b0d780?ixlib=rb-4.0.3&auto=format&fit=crop&w=1200&q=80" alt="Sugar" class="absolute inset-0 w-full h-full object-cover group-hover:scale-110 transition-transform duration-700">
+          <div class="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent"></div>
+          <div class="absolute bottom-0 inset-x-0 p-6 text-white">
+            <h3 class="text-2xl font-semibold tracking-tight">Sugar</h3>
+            <div class="reveal-on-hover">
+              <p class="mt-3 text-white/80 font-light text-sm">Clean, dry sugar in retail and bulk packs, with the grain size agreed up front.</p>
+              <a href="#contact" class="mt-4 inline-flex items-center gap-2 bg-[#E8D9B5] text-[#1F2937] px-5 py-2.5 rounded-full text-sm font-medium">Enquire <iconify-icon icon="solar:arrow-right-linear"></iconify-icon></a>
+            </div>
+          </div>
+        </div>
+
+        <!-- Jaggery -->
+        <div class="group relative aspect-[4/5] rounded-[2rem] overflow-hidden bg-[#1F2937]" tabindex="0" data-aos="fade-up" data-aos-delay="200">
+          <img src="https://hoirqrkdgbmvpwutwuwj.supabase.co/storage/v1/object/public/assets/assets/4734259a-bad7-422f-981e-ce01e79184f2_1600w.jpg" alt="Jaggery" class="absolute inset-0 w-full h-full object-cover group-hover:scale-110 transition-transform duration-700">
+          <div class="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent"></div>
+          <div class="absolute bottom-0 inset-x-0 p-6 text-white">
+            <h3 class="text-2xl font-semibold tracking-tight">Jaggery</h3>
+            <div class="reveal-on-hover">
+              <p class="mt-3 text-white/80 font-light text-sm">Traditional cane jaggery, packed so it arrives intact and easy to stock.</p>
+              <a href="#contact" class="mt-4 inline-flex items-center gap-2 bg-[#E8D9B5] text-[#1F2937] px-5 py-2.5 rounded-full text-sm font-medium">Enquire <iconify-icon icon="solar:arrow-right-linear"></iconify-icon></a>
+            </div>
+          </div>
+        </div>
+
+        <!-- Pulses -->
+        <div class="group relative aspect-[4/5] rounded-[2rem] overflow-hidden bg-[#1F2937]" tabindex="0" data-aos="fade-up" data-aos-delay="300">
+          <img src="https://hoirqrkdgbmvpwutwuwj.supabase.co/storage/v1/object/public/assets/assets/c543a9e1-f226-4ced-80b0-feb8445a75b9_1600w.jpg" alt="Pulses" class="absolute inset-0 w-full h-full object-cover group-hover:scale-110 transition-transform duration-700">
+          <div class="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent"></div>
+          <div class="absolute bottom-0 inset-x-0 p-6 text-white">
+            <h3 class="text-2xl font-semibold tracking-tight">Pulses</h3>
+            <div class="reveal-on-hover">
+              <p class="mt-3 text-white/80 font-light text-sm">Lentils, beans and peas sorted and graded, in the pack size your customers buy.</p>
+              <a href="#contact" class="mt-4 inline-flex items-center gap-2 bg-[#E8D9B5] text-[#1F2937] px-5 py-2.5 rounded-full text-sm font-medium">Enquire <iconify-icon icon="solar:arrow-right-linear"></iconify-icon></a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- HAMPI BRAND -->
+  <section id="hampi" class="relative bg-[#2F5D50] py-32 text-white overflow-hidden">
+    <div class="absolute inset-0 bg-fixed bg-cover bg-center mix-blend-overlay opacity-40" style="background-image:url('https://images.unsplash.com/photo-1596040033229-a9821ebd058d?ixlib=rb-4.0.3&auto=format&fit=crop&w=1920&q=80')"></div>
+    <div class="relative z-10 max-w-7xl mx-auto px-6 grid lg:grid-cols-2 gap-16 items-center">
+      <div data-aos="fade-right">
+        <p class="text-sm font-medium tracking-widest uppercase text-[#E8D9B5]">Our brand</p>
+        <h2 class="mt-4 text-4xl md:text-6xl font-semibold tracking-tight leading-[1.1]">Hampi rice, ready for the shelf.</h2>
+        <p class="mt-6 text-lg text-white/80 font-light max-w-xl">
+          Hampi is our own-label rice. It is cleaned, graded and packed in retail bags, so a partner can stock it without any extra handling.
+        </p>
+        <a href="#contact" class="mt-8 inline-flex items-center gap-2 bg-[#E8D9B5] text-[#1F2937] px-8 py-4 rounded-full font-medium hover:bg-white transition-colors duration-300">
+          Stock Hampi
+          <iconify-icon icon="solar:arrow-right-up-linear" class="text-lg"></iconify-icon>
+        </a>
+      </div>
+
+      <div class="flex justify-center" data-aos="fade-left" data-aos-delay="100">
+        <img src="https://hoirqrkdgbmvpwutwuwj.supabase.co/storage/v1/object/public/assets/assets/71093d6f-1d64-4577-bdb2-18532f7e5892_800w.jpg" alt="Hampi rice pack" class="w-full max-w-sm aspect-[3/4] object-cover rounded-[2.5rem] shadow-2xl rotate-3 animate-float">
+      </div>
+    </div>
+  </section>
+
+  <!-- PROCESS: expanding panels (accordion on desktop, stacked cards below lg) -->
+  <section id="process" class="py-24">
+    <div class="max-w-7xl mx-auto px-6">
+      <div class="max-w-2xl mb-12" data-aos="fade-up">
+        <p class="text-sm font-medium tracking-widest uppercase text-[#2F5D50]">How a shipment moves</p>
+        <h2 class="mt-4 text-4xl md:text-5xl font-semibold tracking-tight leading-[1.1]">Four steps, one point of contact.</h2>
+      </div>
+
+      <div id="process-panels" class="flex flex-col lg:flex-row gap-4 lg:h-[440px]" data-aos="fade-up">
+        <div class="panel active relative rounded-[2rem] p-8 bg-[#2F5D50] text-white flex flex-col justify-between min-h-[200px]" tabindex="0">
+          <div class="flex items-center justify-between">
+            <span class="font-heading font-medium text-white/70">01</span>
+            <iconify-icon icon="solar:map-point-bold-duotone" class="text-4xl text-[#E8D9B5]"></iconify-icon>
+          </div>
+          <div>
+            <h3 class="text-2xl font-semibold tracking-tight">Source</h3>
+            <p class="panel-desc mt-3 text-white/80 font-light">You tell us the product, grade and quantity. We confirm what we can supply and agree terms.</p>
+          </div>
+        </div>
+
+        <div class="panel relative rounded-[2rem] p-8 bg-[#E8D9B5] text-[#1F2937] flex flex-col justify-between min-h-[200px]" tabindex="0">
+          <div class="flex items-center justify-between">
+            <span class="font-heading font-medium text-[#1F2937]/60">02</span>
+            <iconify-icon icon="solar:medal-ribbon-star-bold-duotone" class="text-4xl text-[#2F5D50]"></iconify-icon>
+          </div>
+          <div>
+            <h3 class="text-2xl font-semibold tracking-tight">Grade</h3>
+            <p class="panel-desc mt-3 text-[#1F2937]/75 font-light">Lots are cleaned and graded so what arrives matches what was agreed.</p>
+          </div>
+        </div>
+
+        <div class="panel relative rounded-[2rem] p-8 bg-white border border-[#2F5D50]/15 text-[#1F2937] flex flex-col justify-between min-h-[200px]" tabindex="0">
+          <div class="flex items-center justify-between">
+            <span class="font-heading font-medium text-[#1F2937]/60">03</span>
+            <iconify-icon icon="solar:box-bold-duotone" class="text-4xl text-[#2F5D50]"></iconify-icon>
+          </div>
+          <div>
+            <h3 class="text-2xl font-semibold tracking-tight">Pack</h3>
+            <p class="panel-desc mt-3 text-[#1F2937]/75 font-light">Bag size, labelling and palletising follow your specification.</p>
+          </div>
+        </div>
+
+        <div class="panel relative rounded-[2rem] p-8 bg-[#1F2937] text-white flex flex-col justify-between min-h-[200px]" tabindex="0">
+          <div class="flex items-center justify-between">
+            <span class="font-heading font-medium text-white/60">04</span>
+            <iconify-icon icon="solar:delivery-bold-duotone" class="text-4xl text-[#E8D9B5]"></iconify-icon>
+          </div>
+          <div>
+            <h3 class="text-2xl font-semibold tracking-tight">Ship</h3>
+            <p class="panel-desc mt-3 text-white/75 font-light">We prepare the paperwork, book the freight and keep you updated until delivery.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- WHY CHOOSE US: 5/7 column split with nested relative containers and heavy blurs -->
+  <section id="why-us" class="py-32 bg-white">
+    <div class="max-w-7xl mx-auto px-6">
+      <div class="max-w-2xl mb-14" data-aos="fade-up">
+        <p class="text-sm font-medium tracking-widest uppercase text-[#2F5D50]">The advantage</p>
+        <h2 class="mt-4 text-4xl md:text-5xl font-semibold tracking-tight leading-[1.1]">Why partners come back.</h2>
+      </div>
+
+      <div class="grid lg:grid-cols-12 gap-6">
+        <!-- Left -->
+        <div class="lg:col-span-5 relative" data-aos="fade-right">
+          <div class="relative h-full rounded-[2.5rem] bg-[#E8D9B5]/40 p-8 overflow-hidden">
+            <div class="absolute -top-24 -right-24 w-72 h-72 bg-[#2F5D50]/25 rounded-full blur-[100px]"></div>
+            <div class="absolute -bottom-24 -left-24 w-72 h-72 bg-[#E8D9B5] rounded-full blur-[100px]"></div>
+
+            <div class="relative space-y-4">
+              <div class="glow-card rounded-[2rem] bg-white p-6 shadow-sm">
+                <div class="flex items-start gap-4">
+                  <div class="w-12 h-12 shrink-0 rounded-2xl bg-[#2F5D50]/10 flex items-center justify-center text-[#2F5D50]">
+                    <iconify-icon icon="solar:medal-ribbon-star-bold-duotone" class="text-2xl"></iconify-icon>
+                  </div>
+                  <div>
+                    <h3 class="text-lg font-semibold tracking-tight">Consistent grading</h3>
+                    <p class="mt-1 text-sm text-[#1F2937]/70 font-light">The grade you approve is the grade we pack, order after order.</p>
+                  </div>
+                </div>
+              </div>
+
+              <div class="glow-card rounded-[2rem] bg-white p-6 shadow-sm">
+                <div class="flex items-start gap-4">
+                  <div class="w-12 h-12 shrink-0 rounded-2xl bg-[#2F5D50]/10 flex items-center justify-center text-[#2F5D50]">
+                    <iconify-icon icon="solar:box-bold-duotone" class="text-2xl"></iconify-icon>
+                  </div>
+                  <div>
+                    <h3 class="text-lg font-semibold tracking-tight">Packaging to spec</h3>
+                    <p class="mt-1 text-sm text-[#1F2937]/70 font-light">Tell us the bag size and labelling. We pack to it.</p>
+                  </div>
+                </div>
+              </div>
+
+              <div class="glow-card rounded-[2rem] bg-white p-6 shadow-sm">
+                <div class="flex items-start gap-4">
+                  <div class="w-12 h-12 shrink-0 rounded-2xl bg-[#2F5D50]/10 flex items-center justify-center text-[#2F5D50]">
+                    <iconify-icon icon="solar:chat-round-dots-bold-duotone" class="text-2xl"></iconify-icon>
+                  </div>
+                  <div>
+                    <h3 class="text-lg font-semibold tracking-tight">One point of contact</h3>
+                    <p class="mt-1 text-sm text-[#1F2937]/70 font-light">You deal with the same person from quote to delivery.</p>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Right -->
+        <div class="lg:col-span-7 grid grid-cols-2 gap-6" data-aos="fade-left">
+          <div class="relative aspect-square rounded-[2rem] overflow-hidden group bg-[#1F2937]">
+            <img src="https://hoirqrkdgbmvpwutwuwj.supabase.co/storage/v1/object/public/assets/assets/c543a9e1-f226-4ced-80b0-feb8445a75b9_1600w.jpg" alt="Sorted pulses" class="absolute inset-0 w-full h-full object-cover group-hover:scale-110 transition-transform duration-700">
+            <div class="absolute inset-0 bg-gradient-to-t from-black/70 to-transparent"></div>
+            <p class="absolute bottom-5 left-5 right-5 text-white font-heading font-medium text-lg tracking-tight">Sorted by hand and by machine</p>
+          </div>
+
+          <div class="relative aspect-square rounded-[2rem] overflow-hidden group bg-[#1F2937]">
+            <img src="https://hoirqrkdgbmvpwutwuwj.supabase.co/storage/v1/object/public/assets/assets/4734259a-bad7-422f-981e-ce01e79184f2_1600w.jpg" alt="Packed jaggery" class="absolute inset-0 w-full h-full object-cover group-hover:scale-110 transition-transform duration-700">
+            <div class="absolute inset-0 bg-gradient-to-t from-black/70 to-transparent"></div>
+            <p class="absolute bottom-5 left-5 right-5 text-white font-heading font-medium text-lg tracking-tight">Packed to travel</p>
+          </div>
+
+          <div class="relative col-span-2 min-h-[280px] rounded-[2.5rem] bg-[#2F5D50] text-white overflow-hidden p-8 md:p-10 flex flex-col justify-end">
+            <div class="absolute inset-0">
+              <img src="https://hoirqrkdgbmvpwutwuwj.supabase.co/storage/v1/object/public/assets/assets/917d6f93-fb36-439a-8c48-884b67b35381_1600w.jpg" alt="" class="w-full h-full object-cover opacity-30">
+              <div class="absolute -top-20 -left-20 w-80 h-80 bg-[#E8D9B5]/40 rounded-full blur-[120px]"></div>
+              <div class="absolute inset-0 bg-gradient-to-t from-[#2F5D50] via-[#2F5D50]/70 to-transparent"></div>
+            </div>
+            <div class="relative">
+              <h3 class="text-3xl md:text-4xl font-semibold tracking-tight leading-[1.1]">Built for repeat orders.</h3>
+              <p class="mt-3 max-w-md text-white/80 font-light">Set up a standing specification once. Reorders then take a message, not a new negotiation.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- TESTIMONIALS -->
+  <!-- Replace the three quotes below with real customer words before publishing. -->
+  <section id="testimonials" class="py-24 bg-[#E8D9B5] pattern-dots bg-[length:24px_24px]">
+    <div class="max-w-7xl mx-auto px-6">
+      <div class="max-w-2xl mb-12" data-aos="fade-up">
+        <p class="text-sm font-medium tracking-widest uppercase text-[#2F5D50]">Partner words</p>
+        <h2 class="mt-4 text-4xl md:text-5xl font-semibold tracking-tight leading-[1.1]">What partners say.</h2>
+      </div>
+
+      <div class="grid md:grid-cols-3 gap-6">
+        <figure class="rounded-[2rem] bg-[#F8F6F2] p-8 shadow-sm" data-aos="fade-up" data-aos-delay="0">
+          <iconify-icon icon="solar:quote-bold-duotone" class="text-4xl text-[#2F5D50]"></iconify-icon>
+          <blockquote class="mt-4 text-[#1F2937]/80 font-light">The grade matched the sample on every delivery, which makes planning shelf space simple.</blockquote>
+          <figcaption class="mt-6 flex items-center gap-3">
+            <img src="https://images.unsplash.com/photo-1560250097-0b93528c311a?ixlib=rb-4.0.3&auto=format&fit=crop&w=256&q=80" alt="" class="w-12 h-12 rounded-full object-cover">
+            <div>
+              <p class="font-heading font-medium">Retail partner</p>
+              <p class="text-sm text-[#1F2937]/60 font-light">Grocery buyer</p>
+            </div>
+          </figcaption>
+        </figure>
+
+        <figure class="rounded-[2rem] bg-[#F8F6F2] p-8 shadow-sm" data-aos="fade-up" data-aos-delay="100">
+          <iconify-icon icon="solar:quote-bold-duotone" class="text-4xl text-[#2F5D50]"></iconify-icon>
+          <blockquote class="mt-4 text-[#1F2937]/80 font-light">Packaging arrived the way we specified it. Reordering took one message.</blockquote>
+          <figcaption class="mt-6 flex items-center gap-3">
+            <div class="w-12 h-12 rounded-full bg-[#2F5D50] text-white flex items-center justify-center font-heading font-medium">W</div>
+            <div>
+              <p class="font-heading font-medium">Wholesale partner</p>
+              <p class="text-sm text-[#1F2937]/60 font-light">Distributor</p>
+            </div>
+          </figcaption>
+        </figure>
+
+        <figure class="rounded-[2rem] bg-[#F8F6F2] p-8 shadow-sm" data-aos="fade-up" data-aos-delay="200">
+          <iconify-icon icon="solar:quote-bold-duotone" class="text-4xl text-[#2F5D50]"></iconify-icon>
+          <blockquote class="mt-4 text-[#1F2937]/80 font-light">Hampi sells without any extra work on our side. The packs arrive ready for the shelf.</blockquote>
+          <figcaption class="mt-6 flex items-center gap-3">
+            <div class="w-12 h-12 rounded-full bg-[#1F2937] text-white flex items-center justify-center font-heading font-medium">S</div>
+            <div>
+              <p class="font-heading font-medium">Store owner</p>
+              <p class="text-sm text-[#1F2937]/60 font-light">Hampi stockist</p>
+            </div>
+          </figcaption>
+        </figure>
+      </div>
+    </div>
+  </section>
+
+  <!-- BUYER FAQ: tabs -->
+  <section id="faq" class="py-24">
+    <div class="max-w-4xl mx-auto px-6">
+      <div class="mb-10" data-aos="fade-up">
+        <p class="text-sm font-medium tracking-widest uppercase text-[#2F5D50]">Buyer FAQ</p>
+        <h2 class="mt-4 text-4xl md:text-5xl font-semibold tracking-tight leading-[1.1]">Before you order.</h2>
+      </div>
+
+      <div role="tablist" aria-label="Buyer questions" class="flex flex-wrap gap-3" data-aos="fade-up">
+        <button role="tab" id="tab-orders" aria-selected="true" aria-controls="panel-orders" class="faq-tab px-6 py-3 rounded-full text-sm font-medium bg-[#2F5D50] text-white transition-colors duration-300">Orders</button>
+        <button role="tab" id="tab-packaging" aria-selected="false" aria-controls="panel-packaging" class="faq-tab px-6 py-3 rounded-full text-sm font-medium bg-white text-[#1F2937] border border-[#2F5D50]/15 transition-colors duration-300">Packaging</button>
+        <button role="tab" id="tab-shipping" aria-selected="false" aria-controls="panel-shipping" class="faq-tab px-6 py-3 rounded-full text-sm font-medium bg-white text-[#1F2937] border border-[#2F5D50]/15 transition-colors duration-300">Shipping</button>
+      </div>
+
+      <div class="mt-6 rounded-[2rem] bg-white p-8 shadow-sm" data-aos="fade-up">
+        <div role="tabpanel" id="panel-orders" aria-labelledby="tab-orders" class="faq-panel space-y-5">
+          <div>
+            <h3 class="text-lg font-semibold tracking-tight">How do I start?</h3>
+            <p class="mt-1 text-[#1F2937]/70 font-light">Send the product, grade and quantity you need through the form below. We reply with what we can supply and the terms.</p>
+          </div>
+          <div>
+            <h3 class="text-lg font-semibold tracking-tight">Can I ask for a sample?</h3>
+            <p class="mt-1 text-[#1F2937]/70 font-light">Mention it in your message and we will tell you how we handle samples for that product.</p>
+          </div>
+        </div>
+
+        <div role="tabpanel" id="panel-packaging" aria-labelledby="tab-packaging" class="faq-panel hidden space-y-5">
+          <div>
+            <h3 class="text-lg font-semibold tracking-tight">Can you pack to my bag size?</h3>
+            <p class="mt-1 text-[#1F2937]/70 font-light">Yes. Tell us the bag size and labelling and we pack to it.</p>
+          </div>
+          <div>
+            <h3 class="text-lg font-semibold tracking-tight">Do you pack under a private label?</h3>
+            <p class="mt-1 text-[#1F2937]/70 font-light">Ask us in the form. Our own brand is Hampi, and we can discuss other arrangements.</p>
+          </div>
+        </div>
+
+        <div role="tabpanel" id="panel-shipping" aria-labelledby="tab-shipping" class="faq-panel hidden space-y-5">
+          <div>
+            <h3 class="text-lg font-semibold tracking-tight">Do you ship internationally?</h3>
+            <p class="mt-1 text-[#1F2937]/70 font-light">Yes. Give us your destination and we arrange freight and paperwork.</p>
+          </div>
+          <div>
+            <h3 class="text-lg font-semibold tracking-tight">Will I know where my order is?</h3>
+            <p class="mt-1 text-[#1F2937]/70 font-light">Your contact keeps you updated from dispatch until the goods arrive.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- LEAD MAGNET AND CONTACT -->
+  <section id="contact" class="py-32 bg-white">
+    <div class="max-w-7xl mx-auto px-6 grid lg:grid-cols-2 gap-16 items-start">
+      <div data-aos="fade-right">
+        <p class="text-sm font-medium tracking-widest uppercase text-[#2F5D50]">Become a partner</p>
+        <h2 class="mt-4 text-4xl md:text-5xl font-semibold tracking-tight leading-[1.1]">Ask for our product list and pricing.</h2>
+        <p class="mt-6 text-lg text-[#1F2937]/70 font-light">Tell us what you stock and we will send back what suits your shelves.</p>
+
+        <ul class="mt-8 space-y-4">
+          <li class="flex items-start gap-3">
+            <iconify-icon icon="solar:check-circle-bold" class="text-2xl text-[#2F5D50] mt-0.5"></iconify-icon>
+            <span class="text-[#1F2937]/80">Specifications for every commodity we supply</span>
+          </li>
+          <li class="flex items-start gap-3">
+            <iconify-icon icon="solar:check-circle-bold" class="text-2xl text-[#2F5D50] mt-0.5"></iconify-icon>
+            <span class="text-[#1F2937]/80">Packaging and shipping options</span>
+          </li>
+          <li class="flex items-start gap-3">
+            <iconify-icon icon="solar:check-circle-bold" class="text-2xl text-[#2F5D50] mt-0.5"></iconify-icon>
+            <span class="text-[#1F2937]/80">Pricing for your order volume</span>
+          </li>
+          <li class="flex items-start gap-3">
+            <iconify-icon icon="solar:check-circle-bold" class="text-2xl text-[#2F5D50] mt-0.5"></iconify-icon>
+            <span class="text-[#1F2937]/80">A named contact for repeat orders</span>
+          </li>
+        </ul>
+      </div>
+
+      <form id="lead-form" class="rounded-[2.5rem] bg-[#F8F6F2] p-8 md:p-10" data-aos="fade-left" novalidate>
+        <div class="grid sm:grid-cols-2 gap-5">
+          <div>
+            <label for="f-name" class="block text-sm font-medium mb-2">Name</label>
+            <input id="f-name" name="name" required autocomplete="name" class="w-full rounded-2xl bg-white border border-[#2F5D50]/15 px-4 py-3 focus:outline-none focus:ring-2 focus:ring-[#2F5D50]">
+          </div>
+          <div>
+            <label for="f-company" class="block text-sm font-medium mb-2">Company</label>
+            <input id="f-company" name="company" autocomplete="organization" class="w-full rounded-2xl bg-white border border-[#2F5D50]/15 px-4 py-3 focus:outline-none focus:ring-2 focus:ring-[#2F5D50]">
+          </div>
+          <div class="sm:col-span-2">
+            <label for="f-email" class="block text-sm font-medium mb-2">Email</label>
+            <input id="f-email" name="email" type="email" required autocomplete="email" class="w-full rounded-2xl bg-white border border-[#2F5D50]/15 px-4 py-3 focus:outline-none focus:ring-2 focus:ring-[#2F5D50]">
+          </div>
+          <div class="sm:col-span-2">
+            <label for="f-product" class="block text-sm font-medium mb-2">Product of interest</label>
+            <select id="f-product" name="product" class="w-full rounded-2xl bg-white border border-[#2F5D50]/15 px-4 py-3 focus:outline-none focus:ring-2 focus:ring-[#2F5D50]">
+              <option>Rice</option>
+              <option>Sugar</option>
+              <option>Jaggery</option>
+              <option>Pulses</option>
+              <option>Hampi rice</option>
+              <option>More than one</option>
+            </select>
+          </div>
+          <div class="sm:col-span-2">
+            <label for="f-message" class="block text-sm font-medium mb-2">Quantity and destination</label>
+            <textarea id="f-message" name="message" rows="4" class="w-full rounded-2xl bg-white border border-[#2F5D50]/15 px-4 py-3 focus:outline-none focus:ring-2 focus:ring-[#2F5D50]"></textarea>
+          </div>
+          <div class="hidden" aria-hidden="true">
+            <label for="f-website">Website</label>
+            <input id="f-website" name="website" tabindex="-1" autocomplete="off">
+          </div>
+        </div>
+        <button type="submit" class="mt-6 w-full inline-flex items-center justify-center gap-2 bg-[#2F5D50] text-white px-8 py-4 rounded-full font-medium hover:bg-[#1F2937] transition-colors duration-300">
+          Send request
+          <iconify-icon icon="solar:arrow-right-linear" class="text-lg"></iconify-icon>
+        </button>
+        <p id="form-status" role="status" class="mt-4 text-sm font-medium text-[#2F5D50]"></p>
+      </form>
+    </div>
+  </section>
+
+  <!-- FOOTER -->
+  <footer class="relative bg-[#1F2937] text-white overflow-hidden">
+    <div class="max-w-7xl mx-auto px-6 pt-20 pb-10 grid md:grid-cols-3 gap-10 relative z-10">
+      <div>
+        <img src="https://hoirqrkdgbmvpwutwuwj.supabase.co/storage/v1/object/public/assets/assets/d0dd485f-b2b1-4dbc-9832-300ff89cdd9f_800w.png" alt="Nature Nest Essentials logo" class="h-12 w-auto object-contain bg-[#F8F6F2] rounded-2xl p-2">
+        <p class="mt-4 text-white/60 font-light max-w-xs">Rice, sugar, jaggery and pulses, plus Hampi rice for retail.</p>
+      </div>
+      <div>
+        <h3 class="font-heading font-medium text-[#E8D9B5]">Explore</h3>
+        <ul class="mt-4 space-y-2 text-white/70 font-light">
+          <li><a href="#about" class="hover:text-white">About</a></li>
+          <li><a href="#commodities" class="hover:text-white">Commodities</a></li>
+          <li><a href="#hampi" class="hover:text-white">Hampi</a></li>
+          <li><a href="#faq" class="hover:text-white">Buyer FAQ</a></li>
+        </ul>
+      </div>
+      <div>
+        <h3 class="font-heading font-medium text-[#E8D9B5]">Work with us</h3>
+        <ul class="mt-4 space-y-2 text-white/70 font-light">
+          <li><a href="#contact" class="hover:text-white">Become a partner</a></li>
+          <li><a href="#contact" class="hover:text-white">Request pricing</a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="relative z-10 max-w-7xl mx-auto px-6 pb-8 text-sm text-white/50 font-light flex flex-col sm:flex-row justify-between gap-2">
+      <p>&copy; <span id="year"></span> Nature Nest Essentials. All rights reserved.</p>
+    </div>
+    <div class="watermark font-heading font-semibold text-center -mb-4" aria-hidden="true">NATURE NEST</div>
+  </footer>
+
+  <!-- Scripts -->
+  <script src="https://code.iconify.design/iconify-icon/1.0.7/iconify-icon.min.js"></script>
+  <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/@studio-freight/lenis@1.0.33/dist/lenis.min.js"></script>
+
+  <script>
+    /* ---------- Settings you can change ---------- */
+    var YOUTUBE_ID = '';      // Example: 'abc123xyz'. Leave empty to show the rice photo instead of a video.
+    var FORM_ENDPOINT = '';   // URL that accepts a JSON POST (Formspree, your own API).
+    var CONTACT_EMAIL = '';   // Fallback: opens the visitor's email app with the request filled in.
+
+    var reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+    /* ---------- AOS ---------- */
+    AOS.init({ once: true, duration: 800, offset: 50 });
+
+    /* ---------- Footer year ---------- */
+    document.getElementById('year').textContent = new Date().getFullYear();
+
+    /* ---------- Video swap ---------- */
+    if (YOUTUBE_ID) {
+      var frame = document.getElementById('about-video');
+      frame.src = 'https://www.youtube.com/embed/' + encodeURIComponent(YOUTUBE_ID);
+      frame.classList.remove('hidden');
+      document.getElementById('about-image').classList.add('hidden');
+    }
+
+    /* ---------- Lenis smooth scroll + GSAP ---------- */
+    gsap.registerPlugin(ScrollTrigger);
+    if (!reduceMotion && window.Lenis) {
+      var lenis = new Lenis({ duration: 1.2, easing: function (t) { return Math.min(1, 1.001 - Math.pow(2, -10 * t)); } });
+      lenis.on('scroll', ScrollTrigger.update);
+      gsap.ticker.add(function (time) { lenis.raf(time * 1000); });
+      gsap.ticker.lagSmoothing(0);
+
+      document.querySelectorAll('a[href^="#"]').forEach(function (a) {
+        a.addEventListener('click', function (e) {
+          var id = a.getAttribute('href');
+          if (id.length > 1 && document.querySelector(id)) {
+            e.preventDefault();
+            lenis.scrollTo(id, { offset: -80 });
+          }
+        });
+      });
+    }
+
+    /* ---------- Scrub text: split by words, fade 0.2 to 1 ---------- */
+    (function () {
+      var el = document.getElementById('scrub-text');
+      var words = el.textContent.trim().split(/\s+/);
+      el.innerHTML = words.map(function (w) { return '<span class="scrub-word">' + w + '</span>'; }).join(' ');
+      var spans = el.querySelectorAll('.scrub-word');
+      if (reduceMotion) return;
+      gsap.set(spans, { opacity: 0.2 });
+      gsap.to(spans, {
+        opacity: 1,
+        stagger: 0.1,
+        ease: 'none',
+        scrollTrigger: { trigger: el, start: 'top 80%', end: 'bottom 45%', scrub: true }
+      });
+    })();
+
+    /* ---------- Glow cards ---------- */
+    document.querySelectorAll('.glow-card').forEach(function (card) {
+      card.addEventListener('mousemove', function (e) {
+        var r = card.getBoundingClientRect();
+        card.style.setProperty('--mouse-x', (e.clientX - r.left) + 'px');
+        card.style.setProperty('--mouse-y', (e.clientY - r.top) + 'px');
+      });
+    });
+
+    /* ---------- Process panels (accordion on lg screens) ---------- */
+    (function () {
+      var wrap = document.getElementById('process-panels');
+      var panels = Array.prototype.slice.call(wrap.querySelectorAll('.panel'));
+      var current = 0, timer = null;
+      var desktop = window.matchMedia('(min-width: 1024px)');
+
+      function activate(i) {
+        current = i;
+        panels.forEach(function (p, idx) { p.classList.toggle('active', idx === i); });
+      }
+      function start() {
+        stop();
+        if (!desktop.matches || reduceMotion) return;
+        timer = setInterval(function () { activate((current + 1) % panels.length); }, 3500);
+      }
+      function stop() { if (timer) { clearInterval(timer); timer = null; } }
+
+      panels.forEach(function (p, i) {
+        p.addEventListener('mouseenter', function () { activate(i); });
+        p.addEventListener('focus', function () { activate(i); });
+        p.addEventListener('click', function () { activate(i); });
+      });
+      wrap.addEventListener('mouseenter', stop);
+      wrap.addEventListener('mouseleave', start);
+      wrap.addEventListener('focusin', stop);
+      wrap.addEventListener('focusout', start);
+      desktop.addEventListener('change', start);
+      start();
+    })();
+
+    /* ---------- FAQ tabs ---------- */
+    (function () {
+      var tabs = document.querySelectorAll('.faq-tab');
+      tabs.forEach(function (tab) {
+        tab.addEventListener('click', function () {
+          tabs.forEach(function (t) {
+            var on = t === tab;
+            t.setAttribute('aria-selected', on ? 'true' : 'false');
+            t.className = 'faq-tab px-6 py-3 rounded-full text-sm font-medium transition-colors duration-300 ' +
+              (on ? 'bg-[#2F5D50] text-white' : 'bg-white text-[#1F2937] border border-[#2F5D50]/15');
+            document.getElementById(t.getAttribute('aria-controls')).classList.toggle('hidden', !on);
+          });
+        });
+      });
+    })();
+
+    /* ---------- Lead form ---------- */
+    (function () {
+      var form = document.getElementById('lead-form');
+      var status = document.getElementById('form-status');
+      form.addEventListener('submit', function (e) {
+        e.preventDefault();
+        var data = Object.fromEntries(new FormData(form).entries());
+        if (data.website) return;
+        if (!data.name || !data.email || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(data.email)) {
+          status.textContent = 'Please enter your name and a valid email.';
+          return;
+        }
+        if (FORM_ENDPOINT) {
+          status.textContent = 'Sending...';
+          fetch(FORM_ENDPOINT, { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(data) })
+            .then(function (res) {
+              if (!res.ok) throw new Error();
+              form.reset();
+              status.textContent = 'Thank you. We received your request.';
+            })
+            .catch(function () { status.textContent = 'Something went wrong. Please try again.'; });
+        } else if (CONTACT_EMAIL) {
+          var body = 'Name: ' + data.name + '\nCompany: ' + data.company + '\nEmail: ' + data.email + '\nProduct: ' + data.product + '\n\n' + data.message;
+          window.location.href = 'mailto:' + CONTACT_EMAIL + '?subject=' + encodeURIComponent('Partner request') + '&body=' + encodeURIComponent(body);
+        } else {
+          status.textContent = 'This form is not connected yet. Set FORM_ENDPOINT or CONTACT_EMAIL in the page script.';
+        }
+      });
+    })();
+  </script>
+</body>
+</html>
