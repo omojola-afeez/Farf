@@ -39,7 +39,7 @@ Stripe is supported but not the default. Set `NEXT_PUBLIC_PAYMENT_PROVIDER=strip
 
 ## Placeholders to confirm
 
-- Free delivery over ₦50,000, flat delivery ₦3,500, returns within 7 days, delivery in 3 to 7 business days. Change them in `.env.local`.
+- Free delivery over ₦50,000, flat delivery ₦3,500, returns within 1 to 3 days, delivery in 1 to 3 days. Change them in `.env.local`.
 - Brand colours (orange and teal), text-only logo, support email.
 - Sample products are demo data only.
 
