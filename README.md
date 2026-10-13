@@ -29,6 +29,8 @@ Stripe is supported but not the default. Set `NEXT_PUBLIC_PAYMENT_PROVIDER=strip
 
 **Resend**: set `RESEND_API_KEY`, `EMAIL_FROM` (a verified domain) and `ADMIN_EMAIL`.
 
+**WhatsApp orders**: set `NEXT_PUBLIC_WHATSAPP_NUMBER` (digits only, for example 2348012345678). The cart then shows an "Order on WhatsApp" button that opens a chat with the full cart, delivery fee, total and any delivery details already typed in.
+
 **Vercel**: import the repo, add every variable from `.env.local`, deploy. Variables read by the browser must start with exactly `NEXT_PUBLIC_`.
 
 ## The two landing page files

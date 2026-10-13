@@ -49,8 +49,23 @@ export default function CartPage() {
       (i) =>
         `- ${i.name}${Object.keys(i.variants || {}).length ? ` (${variantLabel(i.variants)})` : ''} x ${i.quantity}: ${formatPrice(i.price * i.quantity)}`
     );
-    const text = `Hello FARF, I would like to order:\n${lines.join('\n')}\nSubtotal: ${formatPrice(subtotal)}`;
-    return `https://wa.me/${siteConfig.whatsapp}?text=${encodeURIComponent(text)}`;
+    const parts = [
+      `Hello ${siteConfig.name}, I would like to order:`,
+      ...lines,
+      '',
+      `Subtotal: ${formatPrice(subtotal)}`,
+      `Delivery: ${shipping === 0 ? 'Free' : formatPrice(shipping)}`,
+      `Total: ${formatPrice(total)}`,
+    ];
+    const details = [
+      customer.name && `Name: ${customer.name}`,
+      customer.phone && `Phone: ${customer.phone}`,
+      [customer.address, customer.city, customer.state].filter(Boolean).join(', ') &&
+        `Address: ${[customer.address, customer.city, customer.state].filter(Boolean).join(', ')}`,
+    ].filter(Boolean);
+    if (details.length) parts.push('', ...details);
+    parts.push('', 'Please confirm availability and how to pay.');
+    return `https://wa.me/${siteConfig.whatsapp}?text=${encodeURIComponent(parts.join('\n'))}`;
   }
 
   return (
@@ -190,9 +205,24 @@ export default function CartPage() {
                 {siteConfig.paymentProvider === 'stripe' ? 'Secure payment by Stripe.' : 'Secure payment by Paystack: card, bank transfer or USSD.'}
               </p>
               {siteConfig.whatsapp && (
-                <a href={whatsappLink()} target="_blank" rel="noopener noreferrer" className="btn-secondary mt-3 w-full">
-                  Order on WhatsApp
-                </a>
+                <>
+                  <div className="my-4 flex items-center gap-3 text-xs font-semibold uppercase tracking-widest text-slate-500">
+                    <span className="h-px flex-1 bg-slate-300" />
+                    or
+                    <span className="h-px flex-1 bg-slate-300" />
+                  </div>
+                  <a
+                    href={whatsappLink()}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="btn w-full bg-[#128C7E] text-white hover:bg-[#0B6B60]"
+                  >
+                    Order on WhatsApp
+                  </a>
+                  <p className="mt-2 text-center text-xs text-slate-600">
+                    Send your cart to us on WhatsApp and agree payment there, for example bank transfer.
+                  </p>
+                </>
               )}
               {error && (
                 <p role="alert" className="mt-3 text-base font-semibold text-red-700">
