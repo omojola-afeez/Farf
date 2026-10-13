@@ -1,21 +1,20 @@
 import Link from 'next/link';
 import { useEffect, useRef } from 'react';
 import { formatPrice } from '@/lib/format';
-import Icon from '../Icon';
 import ProductImage from '../ProductImage';
 
 // Three floating slots. A slot shows a real product photo when one exists,
 // and a plain collection tile when it does not.
 const SLOTS = [
-  { pos: 'left-0 top-2 w-56', anim: 'animate-float', depth: 16 },
-  { pos: 'right-0 top-28 w-60', anim: 'animate-float-slow', depth: 26 },
-  { pos: 'left-20 bottom-0 w-52', anim: 'animate-float', depth: 10 },
+  { pos: 'left-0 top-0 w-64', anim: 'animate-float', depth: 16 },
+  { pos: 'right-0 top-32 w-60', anim: 'animate-float-slow', depth: 26 },
+  { pos: 'left-0 bottom-0 w-52', anim: 'animate-float', depth: 10 },
 ];
 
 const FALLBACK = [
-  { icon: 'chef-hat', label: 'Kitchen', sub: 'Utensils and storage', tone: 'bg-white/20 text-white' },
-  { icon: 'backpack', label: 'School', sub: 'Bags and stationery', tone: 'bg-[#FFF8F1]/90 text-slate-900' },
-  { icon: 'toolbox', label: 'DIY', sub: 'Tools and hardware', tone: 'bg-teal-900/50 text-white' },
+  { image: '/images/hero-kitchen.jpg', ratio: 388 / 157, href: '/shop/utensils', label: 'Kitchen', sub: 'Utensils and storage', tone: 'bg-white/20 text-white' },
+  { image: '/images/hero-school.jpg', ratio: 353 / 195, href: '/shop/school', label: 'School', sub: 'Bags and stationery', tone: 'bg-[#FFF8F1]/95 text-slate-900' },
+  { image: '/images/hero-diy.jpg', ratio: 359 / 158, href: '/shop/diy', label: 'DIY', sub: 'Tools and hardware', tone: 'bg-teal-900/60 text-white' },
 ];
 
 function PhotoFloater({ product }) {
@@ -38,11 +37,19 @@ function PhotoFloater({ product }) {
 
 function TileFloater({ tile }) {
   return (
-    <div className={`rounded-[2rem] border border-white/30 p-6 backdrop-blur-xl ${tile.tone}`}>
-      <Icon name={tile.icon} className="h-12 w-12 text-[#F26B1D]" />
-      <p className="mt-4 font-heading text-xl font-semibold">{tile.label}</p>
-      <p className="text-sm opacity-75">{tile.sub}</p>
-    </div>
+    <Link href={tile.href} className={`block rounded-[2rem] border border-white/30 p-3 shadow-xl backdrop-blur-xl ${tile.tone}`}>
+      {/* eslint-disable-next-line @next/next/no-img-element */}
+      <img
+        src={tile.image}
+        alt={`${tile.label}: ${tile.sub}`}
+        width={400}
+        height={Math.round(400 / tile.ratio)}
+        className="w-full rounded-[1.4rem] object-cover"
+        style={{ aspectRatio: tile.ratio }}
+      />
+      <p className="mt-3 px-2 font-heading text-xl font-semibold">{tile.label}</p>
+      <p className="px-2 pb-2 text-sm opacity-80">{tile.sub}</p>
+    </Link>
   );
 }
 
@@ -105,7 +112,7 @@ export default function Hero({ featured }) {
             </div>
           </div>
 
-          <div className="relative hidden h-[440px] lg:block">
+          <div className="relative hidden h-[500px] lg:block">
             {SLOTS.map((slot, i) => (
               <div key={i} className={`absolute ${slot.pos}`} data-depth={slot.depth} style={{ transition: 'transform 0.3s ease-out' }}>
                 <div className={slot.anim} style={{ animationDelay: `${i * 0.8}s` }}>
@@ -124,10 +131,11 @@ export default function Hero({ featured }) {
                 <PhotoFloater product={photos[i]} />
               </div>
             ) : (
-              <div key={i} className="rounded-2xl border border-white/30 bg-white/15 p-3 text-center backdrop-blur-xl">
-                <Icon name={FALLBACK[i].icon} className="mx-auto h-8 w-8 text-[#F26B1D]" />
-                <p className="mt-1 text-sm font-semibold">{FALLBACK[i].label}</p>
-              </div>
+              <Link key={i} href={FALLBACK[i].href} className="block rounded-2xl border border-white/30 bg-white/15 p-1.5 text-center backdrop-blur-xl">
+                {/* eslint-disable-next-line @next/next/no-img-element */}
+                <img src={FALLBACK[i].image} alt="" width={200} height={110} className="aspect-[4/3] w-full rounded-xl object-cover" />
+                <p className="my-1.5 text-sm font-semibold">{FALLBACK[i].label}</p>
+              </Link>
             )
           )}
         </div>

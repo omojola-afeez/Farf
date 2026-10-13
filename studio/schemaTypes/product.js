@@ -30,7 +30,7 @@ export default defineType({
     defineField({
       name: 'price',
       title: 'Price',
-      description: 'In the store currency, for example 12.50',
+      description: 'In Naira, for example 12500',
       type: 'number',
       validation: (r) => r.required().min(0),
     }),
