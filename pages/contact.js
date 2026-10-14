@@ -35,6 +35,13 @@ export default function Contact() {
           Email <a className="font-semibold underline" href={`mailto:${siteConfig.supportEmail}`}>{siteConfig.supportEmail}</a> or
           send a message below.
         </p>
+        <ul className="mt-4 space-y-1 text-base text-slate-800">
+          <li>
+            Phone and WhatsApp:{' '}
+            <a className="font-semibold underline" href={`tel:+${siteConfig.whatsapp}`}>{siteConfig.phone}</a>
+          </li>
+          <li>Address: {siteConfig.address}</li>
+        </ul>
 
         <form onSubmit={onSubmit} className="mt-6 space-y-4">
           <div>

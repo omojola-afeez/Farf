@@ -46,6 +46,12 @@ export default function Footer() {
                 {siteConfig.supportEmail}
               </a>
             </li>
+            <li>
+              <a href={`tel:+${siteConfig.whatsapp}`} className="hover:underline">
+                {siteConfig.phone}
+              </a>
+            </li>
+            <li className="max-w-[16rem] text-slate-300">{siteConfig.address}</li>
           </ul>
         </div>
       </div>
