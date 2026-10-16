@@ -55,7 +55,7 @@ export default function Header() {
         <div className="flex items-center gap-2">
           <button
             type="button"
-            className="-ml-2 flex h-11 w-11 items-center justify-center rounded-lg text-slate-900 hover:bg-slate-100 md:hidden"
+            className="-ml-2 flex h-11 w-11 items-center justify-center rounded-lg text-slate-900 hover:bg-slate-100 xl:hidden"
             aria-expanded={open}
             aria-controls="mobile-menu"
             aria-label={open ? 'Close menu' : 'Open menu'}
@@ -72,16 +72,16 @@ export default function Header() {
           <Logo />
         </div>
 
-        <nav className="hidden items-center gap-6 md:flex" aria-label="Main">
+        <nav className="hidden items-center gap-4 xl:flex 2xl:gap-6" aria-label="Main">
           {navLinks.map((l) => (
-            <Link key={l.href} href={l.href} className="text-base font-semibold text-slate-800 hover:text-brand-teal">
+            <Link key={l.href} href={l.href} className="whitespace-nowrap text-[15px] font-semibold text-slate-800 hover:text-brand-teal 2xl:text-base">
               {l.label}
             </Link>
           ))}
         </nav>
 
         <div className="flex items-center gap-2">
-          <SearchForm className="hidden w-64 lg:flex" />
+          <SearchForm className="hidden w-56 2xl:flex" />
           <Link
             href="/cart"
             className="relative flex h-11 items-center gap-2 rounded-lg px-3 font-semibold text-slate-900 hover:bg-slate-100"
@@ -102,12 +102,12 @@ export default function Header() {
         </div>
       </div>
 
-      <div className="container-page pb-3 lg:hidden">
+      <div className="container-page pb-3 2xl:hidden">
         <SearchForm />
       </div>
 
       {open && (
-        <nav id="mobile-menu" className="border-t border-white/70 md:hidden" aria-label="Mobile">
+        <nav id="mobile-menu" className="border-t border-white/70 xl:hidden" aria-label="Mobile">
           <ul className="container-page py-2">
             {navLinks.map((l) => (
               <li key={l.href}>
