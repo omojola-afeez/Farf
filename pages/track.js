@@ -94,7 +94,7 @@ export default function Track({ searched, order, unavailable, id, email }) {
               ))}
             </ul>
             <dl className="mt-3 space-y-1 text-base">
-              <div className="flex justify-between"><dt>Delivery</dt><dd>{formatPrice(order.shippingCost, order.currency)}</dd></div>
+              <div className="flex justify-between"><dt>Delivery</dt><dd>{order.shippingCost > 0 ? formatPrice(order.shippingCost, order.currency) : 'Agreed on WhatsApp'}</dd></div>
               <div className="flex justify-between text-lg font-bold"><dt>Total</dt><dd>{formatPrice(order.total, order.currency)}</dd></div>
             </dl>
           </section>

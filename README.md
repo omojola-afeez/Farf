@@ -18,7 +18,7 @@ With no Sanity keys the site runs in demo mode with sample products and a yellow
 1. Create a project and a private dataset.
 2. Create an editor token and put it in `SANITY_API_TOKEN`.
 3. Deploy the studio in `studio/` (`cd studio && npm install && npx sanity deploy`).
-4. Add products. Upload real photos and tick "featured": featured products with photos float in the home hero, and collection panels pick up a cover photo from each category.
+4. Add products. Upload real photos. The home page shows a random selection of in-stock products, and products with photos float in the home hero. Collection panels pick up a cover photo from each category.
 
 **Paystack**
 1. Put the secret key in `PAYSTACK_SECRET_KEY`.
@@ -39,7 +39,7 @@ Stripe is supported but not the default. Set `NEXT_PUBLIC_PAYMENT_PROVIDER=strip
 
 ## Placeholders to confirm
 
-- Free delivery over ₦50,000, flat delivery ₦3,500, returns within 1 to 3 days, delivery in 1 to 3 days. Change them in `.env.local`.
+- Delivery fee is paid by the buyer and agreed on WhatsApp. Returns within 1 to 3 days, delivery in 1 to 3 days. Change the windows in `.env.local`.
 - Brand colours (orange and teal), text-only logo, support email.
 - Sample products are demo data only.
 

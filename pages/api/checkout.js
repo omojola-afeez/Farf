@@ -97,7 +97,7 @@ async function payWithStripe(req, res, prepared) {
         shipping_rate_data: {
           type: 'fixed_amount',
           fixed_amount: { amount: prepared.shipping, currency },
-          display_name: prepared.shipping === 0 ? 'Free delivery' : 'Standard delivery',
+          display_name: 'Delivery fee agreed on WhatsApp',
         },
       },
     ],

@@ -10,7 +10,7 @@ const TABS = [
     id: 'delivery',
     label: 'Delivery',
     q: 'How long does delivery take?',
-    a: `Orders usually arrive in ${siteConfig.deliveryWindow}. Delivery is free over ${formatPrice(siteConfig.freeShippingThreshold)}. Below that, the fee is shown in your cart before you pay.`,
+    a: `Orders usually arrive in ${siteConfig.deliveryWindow}. The buyer pays the delivery fee. It depends on your location and we agree it with you on WhatsApp.`,
   },
   {
     id: 'returns',

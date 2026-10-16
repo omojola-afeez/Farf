@@ -8,7 +8,7 @@ export default function PageHead({ title, description }) {
       <title>{fullTitle}</title>
       <meta
         name="description"
-        content={description || 'Kitchen tools, school supplies and home-improvement basics in one place.'}
+        content={description || 'Kitchen tools, school supplies, DIY tools, gadgets and home utilities in one place.'}
       />
     </Head>
   );

@@ -22,8 +22,8 @@ export default function Terms() {
           <section>
             <h2 className="text-xl">Delivery</h2>
             <p className="mt-2">
-              Delivery costs {formatPrice(siteConfig.flatShippingFee)} per order and is free on orders over{' '}
-              {formatPrice(siteConfig.freeShippingThreshold)}. Orders usually arrive in {siteConfig.deliveryWindow}.
+              The buyer pays the delivery fee. It depends on your location and is agreed on WhatsApp.
+              Orders usually arrive in {siteConfig.deliveryWindow}.
               Please check your delivery address carefully before paying.
             </p>
           </section>

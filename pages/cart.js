@@ -16,9 +16,7 @@ export default function CartPage() {
   const [error, setError] = useState('');
 
   const needsDetails = siteConfig.paymentProvider !== 'stripe';
-  const shipping = subtotal >= siteConfig.freeShippingThreshold ? 0 : siteConfig.flatShippingFee;
-  const total = subtotal + shipping;
-  const remaining = Math.max(0, siteConfig.freeShippingThreshold - subtotal);
+  const total = subtotal;
 
   const update = (field) => (e) => setCustomer((c) => ({ ...c, [field]: e.target.value }));
 
@@ -53,9 +51,8 @@ export default function CartPage() {
       `Hello ${siteConfig.name}, I would like to order:`,
       ...lines,
       '',
-      `Subtotal: ${formatPrice(subtotal)}`,
-      `Delivery: ${shipping === 0 ? 'Free' : formatPrice(shipping)}`,
-      `Total: ${formatPrice(total)}`,
+      `Items total: ${formatPrice(total)}`,
+      'Delivery: to be agreed with you',
     ];
     const details = [
       customer.name && `Name: ${customer.name}`,
@@ -148,18 +145,16 @@ export default function CartPage() {
                 </div>
                 <div className="flex justify-between">
                   <dt>Delivery</dt>
-                  <dd className="font-semibold">{shipping === 0 ? 'Free' : formatPrice(shipping)}</dd>
+                  <dd className="text-right font-semibold">Agreed on WhatsApp</dd>
                 </div>
                 <div className="flex justify-between border-t border-slate-300/70 pt-2 text-lg">
-                  <dt className="font-bold">Total</dt>
+                  <dt className="font-bold">Items total</dt>
                   <dd className="font-extrabold">{formatPrice(total)}</dd>
                 </div>
               </dl>
-              {remaining > 0 && (
-                <p className="mt-3 text-sm text-slate-700">
-                  Add {formatPrice(remaining)} more for free delivery.
-                </p>
-              )}
+              <p className="mt-3 text-sm text-slate-700">
+                The delivery fee is paid by the buyer and is not included. Agree it with us on WhatsApp.
+              </p>
 
               {needsDetails && (
                 <fieldset className="mt-5 space-y-3">

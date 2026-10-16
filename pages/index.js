@@ -34,12 +34,12 @@ export default function Home({ featured }) {
       {featured.length > 0 && (
         <section className="container-page py-12">
           <div className="mb-6 flex items-end justify-between gap-4">
-            <h2 className="text-3xl font-semibold sm:text-4xl">Featured products</h2>
+            <h2 className="text-3xl font-semibold sm:text-4xl">Products to explore</h2>
             <Link href="/shop" className="text-base font-semibold text-brand-teal-dark underline">
               View all
             </Link>
           </div>
-          <Carousel label="Featured products">
+          <Carousel label="Products to explore">
             {featured.map((p) => (
               <ProductCard key={p._id} product={p} />
             ))}

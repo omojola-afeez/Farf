@@ -11,7 +11,7 @@ export default function Faq() {
     },
     {
       q: 'How much is delivery?',
-      a: `Delivery is ${formatPrice(siteConfig.flatShippingFee)}. It is free on orders over ${formatPrice(siteConfig.freeShippingThreshold)}.`,
+      a: 'The buyer pays the delivery fee. It depends on your location, and we agree the amount with you on WhatsApp.',
     },
     {
       q: 'Can I return an item?',

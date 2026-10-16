@@ -8,7 +8,7 @@ const CARDS = [
   {
     href: '/shop?occasion=new-term',
     number: '01',
-    title: 'New school term',
+    title: 'School items',
     text: 'Bags, lunch boxes, stationery and accessories, gathered in one list so nothing gets missed on the first morning.',
     tone: 'glass-teal text-white',
     top: 'top-44 lg:top-32',

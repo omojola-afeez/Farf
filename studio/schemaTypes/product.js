@@ -19,9 +19,9 @@ export default defineType({
       type: 'string',
       options: {
         list: [
-          { title: 'Household Utensils', value: 'utensils' },
+          { title: 'Kitchen Utensils', value: 'utensils' },
           { title: 'Back to School', value: 'school' },
-          { title: 'DIY & Home Equipment', value: 'diy' },
+          { title: 'DIY & Gadgets', value: 'diy' },
           { title: 'Home Utilities', value: 'utilities' },
           { title: 'Educational Toys', value: 'toys' },
           { title: 'Other', value: 'other' },
@@ -115,13 +115,12 @@ export default defineType({
       of: [defineArrayMember({ type: 'string' })],
       options: {
         list: [
-          { title: 'New school term', value: 'new-term' },
+          { title: 'School items', value: 'new-term' },
           { title: 'New apartment', value: 'new-apartment' },
           { title: 'Weekend fix-it project', value: 'weekend-fix' },
         ],
       },
     }),
-    defineField({ name: 'featured', title: 'Show on home page', type: 'boolean', initialValue: false }),
     defineField({ name: 'sku', title: 'SKU', type: 'string' }),
   ],
   preview: {

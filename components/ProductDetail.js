@@ -137,11 +137,7 @@ export default function ProductDetail({ product }) {
                   <li>Only {product.stockCount} left.</li>
                 )}
                 <li>Delivery in {siteConfig.deliveryWindow}.</li>
-                <li>
-                  {siteConfig.freeShippingThreshold > 0
-                    ? `Free delivery on orders over ${formatPrice(siteConfig.freeShippingThreshold)}.`
-                    : 'Free delivery.'}
-                </li>
+                <li>Delivery fee is paid by the buyer and agreed on WhatsApp.</li>
                 <li>Returns accepted within {siteConfig.returnWindowDays} days.</li>
               </ul>
             </div>

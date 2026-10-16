@@ -5,7 +5,7 @@ import Icon from '../Icon';
 const PANELS = [
   {
     slug: 'utensils',
-    title: 'Home and kitchen',
+    title: 'Kitchen utensils',
     text: 'Cookware, utensils, storage and everyday kitchen tools.',
     image: '/images/panel-kitchen.jpg',
     alt: 'A teal pot, ceramic bowls and wooden spoons on a kitchen counter',
@@ -23,8 +23,8 @@ const PANELS = [
   },
   {
     slug: 'diy',
-    title: 'DIY and tools',
-    text: 'Hand tools, fixings and hardware for repairs and projects.',
+    title: 'DIY and gadgets',
+    text: 'Hand tools, hardware and handy gadgets for repairs and projects.',
     image: '/images/panel-diy.jpg',
     alt: 'A hammer, pliers, screwdriver and tape measure on a wooden workbench',
     tint: 'from-slate-900/90 via-slate-900/30 to-transparent',

@@ -11,11 +11,11 @@ export default function About() {
         <h1 className="text-3xl">About FARF</h1>
         <div className="mt-6 space-y-4 text-lg text-slate-800">
           <p>
-            FARF is a store for the things a household actually needs: kitchen tools, school supplies and
-            home-improvement basics. The range is practical and priced for everyday use.
+            FARF is a store for the things a household actually needs: kitchen tools, school supplies, DIY
+            tools, gadgets and home utilities. The range is practical and priced for everyday use.
           </p>
           <p>
-            The store is organised two ways. You can shop by collection, or by occasion: a new school term, a new
+            The store is organised two ways. You can shop by collection, or by occasion: school items, a new
             apartment, or a weekend fix-it project.
           </p>
         </div>

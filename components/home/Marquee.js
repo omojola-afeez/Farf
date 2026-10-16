@@ -5,7 +5,7 @@ import Icon from '../Icon';
 // Two identical blocks, so the -50% loop is seamless. Timing is a fixed 25s linear.
 export default function Marquee() {
   const items = [
-    { icon: 'delivery', text: `Free delivery over ${formatPrice(siteConfig.freeShippingThreshold)}` },
+    { icon: 'delivery', text: 'Delivery fee agreed on WhatsApp' },
     { icon: 'restart', text: 'Easy returns' },
     { icon: 'shield-check', text: 'Secure checkout' },
     { icon: 'map-point', text: 'Order tracking' },

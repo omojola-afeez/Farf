@@ -15,7 +15,7 @@ const SLOTS = [
 const FALLBACK = [
   { image: '/images/hero-kitchen.jpg', ratio: 509 / 377, href: '/shop/utensils', label: 'Kitchen', sub: 'Utensils and storage', tone: 'bg-white/20 text-white' },
   { image: '/images/hero-school.jpg', ratio: 507 / 377, href: '/shop/school', label: 'School', sub: 'Bags and stationery', tone: 'bg-[#FFF8F1]/95 text-slate-900' },
-  { image: '/images/hero-diy.jpg', ratio: 510 / 377, href: '/shop/diy', label: 'DIY', sub: 'Tools and hardware', tone: 'bg-teal-900/60 text-white' },
+  { image: '/images/hero-diy.jpg', ratio: 510 / 377, href: '/shop/diy', label: 'DIY', sub: 'Tools and gadgets', tone: 'bg-teal-900/60 text-white' },
 ];
 
 function PhotoFloater({ product }) {
@@ -96,7 +96,7 @@ export default function Hero({ featured }) {
             </h1>
 
             <p className="mt-5 max-w-xl text-lg font-light text-white/85">
-              Kitchen tools, school supplies and home-improvement basics, priced in Naira and delivered across Nigeria.
+              Kitchen tools, school supplies, DIY tools, gadgets and home utilities, priced in Naira and delivered across Nigeria.
             </p>
 
             <div className="mt-8 flex flex-col gap-3 sm:flex-row">

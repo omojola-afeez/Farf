@@ -40,6 +40,7 @@ export default function Header() {
   }, [router.events]);
 
   const navLinks = [
+    { href: '/', label: 'Home' },
     ...categoryList.map((c) => ({ href: `/shop/${c.slug}`, label: c.short })),
     { href: '/shop', label: 'All products' },
     { href: '/track', label: 'Track order' },
@@ -48,7 +49,7 @@ export default function Header() {
   return (
     <header className="glass-strong sticky top-0 z-40 !rounded-none !border-x-0 !border-t-0">
       <div className="bg-brand-teal-dark/90 px-4 py-2 text-center text-sm font-medium text-white">
-        Free delivery on orders over {formatPrice(siteConfig.freeShippingThreshold)}
+        Delivery fee is agreed on WhatsApp
       </div>
 
       <div className="container-page flex items-center justify-between gap-3 py-3">
@@ -72,17 +73,16 @@ export default function Header() {
           <Logo />
         </div>
 
-        <nav className="hidden items-center gap-4 xl:flex 2xl:gap-6" aria-label="Main">
-          {navLinks.map((l) => (
-            <Link key={l.href} href={l.href} className="whitespace-nowrap text-[15px] font-semibold text-slate-800 hover:text-brand-teal 2xl:text-base">
+        <nav className="hidden items-center gap-3 xl:flex" aria-label="Main">
+          {navLinks.filter((l) => l.href !== '/track').map((l) => (
+            <Link key={l.href} href={l.href} className="whitespace-nowrap px-1 text-sm font-semibold text-slate-800 hover:text-brand-teal">
               {l.label}
             </Link>
           ))}
         </nav>
 
         <div className="flex items-center gap-2">
-          <SearchForm className="hidden w-56 2xl:flex" />
-          <Link
+                    <Link
             href="/cart"
             className="relative flex h-11 items-center gap-2 rounded-lg px-3 font-semibold text-slate-900 hover:bg-slate-100"
             aria-label={`Cart${ready ? `, ${count} items` : ''}`}
@@ -102,7 +102,7 @@ export default function Header() {
         </div>
       </div>
 
-      <div className="container-page pb-3 2xl:hidden">
+      <div className="container-page pb-3">
         <SearchForm />
       </div>
 
