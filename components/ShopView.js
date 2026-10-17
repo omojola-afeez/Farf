@@ -43,7 +43,7 @@ export default function ShopView({ products, total, filters, basePath, title, in
         </div>
       </section>
 
-      <div className="container-page grid gap-8 py-8 lg:grid-cols-[260px_1fr]">
+      <div className="container-page grid grid-cols-1 gap-8 py-8 lg:grid-cols-[260px_minmax(0,1fr)]">
         <aside>
           <details ref={panel} className="glass filter-panel rounded-[1.75rem]">
             <summary className="flex min-h-[48px] cursor-pointer items-center px-4 text-base font-bold lg:pointer-events-none">

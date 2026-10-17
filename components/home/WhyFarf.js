@@ -18,7 +18,7 @@ export default function WhyFarf() {
         <p className="text-sm font-medium uppercase tracking-widest text-brand-teal">Why FARF</p>
         <h2 className="mt-3 text-4xl font-semibold leading-[1.1] sm:text-5xl">Simple shopping, done properly.</h2>
       </div>
-      <div className="grid gap-4 md:grid-cols-2">
+      <div className="grid grid-cols-1 gap-4 md:grid-cols-2">
         {ITEMS.map((it) => (
           <div key={it.title} onMouseMove={spotlight} className="glow-card glass flex items-center gap-5 rounded-[2rem] p-4 sm:p-5">
             {/* eslint-disable-next-line @next/next/no-img-element */}

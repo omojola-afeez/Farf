@@ -8,6 +8,7 @@ export default function App({ Component, pageProps }) {
     <CartProvider>
       <Head>
         <meta name="viewport" content="width=device-width, initial-scale=1" />
+        <meta name="color-scheme" content="light" />
         <meta name="theme-color" content="#0F766E" />
       </Head>
       <Layout>

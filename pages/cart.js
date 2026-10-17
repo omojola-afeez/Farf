@@ -79,11 +79,11 @@ export default function CartPage() {
             <Link href="/shop" className="btn-primary mt-4">Start shopping</Link>
           </div>
         ) : (
-          <div className="mt-6 grid gap-8 lg:grid-cols-[1fr_380px]">
+          <div className="mt-6 grid grid-cols-1 gap-8 lg:grid-cols-[minmax(0,1fr)_380px]">
             <ul className="glass h-fit divide-y divide-white/60 rounded-[2rem]">
               {items.map((item) => (
-                <li key={item.key} className="flex gap-4 p-4">
-                  <div className="w-20 shrink-0 overflow-hidden rounded-2xl border border-white/70 sm:w-24">
+                <li key={item.key} className="flex gap-3 p-4 sm:gap-4">
+                  <div className="w-20 shrink-0 self-start overflow-hidden rounded-2xl border border-white/70 sm:w-24">
                     <ProductImage
                       image={item.imageUrl ? { url: item.imageUrl } : null}
                       name={item.name}
@@ -91,7 +91,7 @@ export default function CartPage() {
                       width={200}
                     />
                   </div>
-                  <div className="flex-1">
+                  <div className="min-w-0 flex-1">
                     <Link href={`/product/${item.slug}`} className="text-base font-semibold hover:underline">
                       {item.name}
                     </Link>
@@ -99,7 +99,7 @@ export default function CartPage() {
                       <p className="text-sm text-slate-600">{variantLabel(item.variants)}</p>
                     )}
                     <p className="mt-1 text-base font-bold">{formatPrice(item.price)}</p>
-                    <div className="mt-2 flex items-center gap-3">
+                    <div className="mt-2 flex flex-wrap items-center gap-x-3 gap-y-1">
                       <div className="flex items-center rounded-full border border-slate-400/70 bg-white/60">
                         <button
                           type="button"
@@ -131,7 +131,7 @@ export default function CartPage() {
                       </button>
                     </div>
                   </div>
-                  <p className="text-base font-bold">{formatPrice(item.price * item.quantity)}</p>
+                  <p className="shrink-0 text-base font-bold">{formatPrice(item.price * item.quantity)}</p>
                 </li>
               ))}
             </ul>
@@ -175,7 +175,7 @@ export default function CartPage() {
                     <label htmlFor="d-address" className="label">Delivery address</label>
                     <input id="d-address" required className="input" value={customer.address} onChange={update('address')} autoComplete="street-address" />
                   </div>
-                  <div className="grid grid-cols-2 gap-3">
+                  <div className="grid grid-cols-[minmax(0,1fr)_minmax(0,1fr)] gap-3">
                     <div>
                       <label htmlFor="d-city" className="label">City or town</label>
                       <input id="d-city" required className="input" value={customer.city} onChange={update('city')} autoComplete="address-level2" />

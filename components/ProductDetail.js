@@ -31,7 +31,7 @@ export default function ProductDetail({ product }) {
   }
 
   return (
-    <div className="container-page grid gap-8 py-8 md:grid-cols-2">
+    <div className="container-page grid grid-cols-1 gap-8 py-8 md:grid-cols-2">
       <div>
         <div className="glass overflow-hidden rounded-[2rem]">
           <ProductImage

@@ -21,7 +21,7 @@ export default function About() {
         </div>
 
         <h2 className="mt-8 text-2xl">What we sell</h2>
-        <ul className="mt-4 grid gap-4 sm:grid-cols-3">
+        <ul className="mt-4 grid grid-cols-1 gap-4 sm:grid-cols-3">
           {categoryList.map((c) => (
             <li key={c.slug} className={`rounded-xl border-2 p-4 ${c.accent.soft} ${c.accent.border}`}>
               <h3 className={`text-lg ${c.accent.text}`}>{c.title}</h3>

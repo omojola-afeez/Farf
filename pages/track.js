@@ -31,7 +31,7 @@ export default function Track({ searched, order, unavailable, id, email }) {
           Enter your order number (or payment reference) and the email you used at checkout.
         </p>
 
-        <form method="get" action="/track" className="glass-strong mt-6 grid gap-4 rounded-[2rem] p-6 sm:grid-cols-2">
+        <form method="get" action="/track" className="glass-strong mt-6 grid grid-cols-1 gap-4 rounded-[2rem] p-6 sm:grid-cols-2">
           <div>
             <label htmlFor="t-id" className="label">Order number</label>
             <input id="t-id" name="id" required defaultValue={id} className="input" placeholder="FARF-AB12CD34" />
@@ -64,7 +64,7 @@ export default function Track({ searched, order, unavailable, id, email }) {
             {order.status === 'cancelled' ? (
               <p className="mt-3 text-lg font-bold text-red-800">This order was cancelled.</p>
             ) : (
-              <ol className="mt-4 grid gap-2 sm:grid-cols-4">
+              <ol className="mt-4 grid grid-cols-1 gap-2 sm:grid-cols-4">
                 {STEPS.map((s, i) => (
                   <li
                     key={s.value}

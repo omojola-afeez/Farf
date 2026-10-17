@@ -6,7 +6,7 @@ import Logo from './Logo';
 export default function Footer() {
   return (
     <footer className="glass-dark relative mt-16 overflow-hidden !rounded-none !border-x-0 !border-b-0 text-slate-200">
-      <div className="container-page grid gap-8 py-10 sm:grid-cols-2 lg:grid-cols-4">
+      <div className="container-page grid grid-cols-1 gap-8 py-10 sm:grid-cols-2 lg:grid-cols-4">
         <div>
           <Logo light />
           <p className="mt-3 text-sm text-slate-300">{siteConfig.tagline}.</p>

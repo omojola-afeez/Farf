@@ -5,11 +5,13 @@
 @layer base {
   html {
     -webkit-text-size-adjust: 100%;
+    color-scheme: light;
     background: #f4f1ea;
   }
   body {
     @apply font-sans text-slate-900 antialiased;
     background: transparent;
+    overflow-x: clip;
   }
   ::selection {
     background: #f26b1d;
