@@ -55,7 +55,7 @@ export default function FaqTabs() {
           <h3 className="text-xl font-semibold">{current.q}</h3>
           <p className="mt-3 max-w-2xl text-lg text-slate-700">{current.a}</p>
         </div>
-        <Link href="/faq" className="mt-8 inline-block font-semibold text-brand-teal-dark underline">
+        <Link href="/faq" className="mt-6 inline-flex min-h-[44px] items-center font-semibold text-brand-teal-dark underline">
           More questions
         </Link>
       </div>

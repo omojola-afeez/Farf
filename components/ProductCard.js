@@ -3,7 +3,7 @@ import { categories } from '@/lib/categories';
 import { formatPrice } from '@/lib/format';
 import ProductImage from './ProductImage';
 
-export default function ProductCard({ product }) {
+export default function ProductCard({ product, as: Heading = 'h3' }) {
   const category = categories[product.category];
   return (
     <Link
@@ -24,9 +24,9 @@ export default function ProductCard({ product }) {
             {category.short}
           </span>
         )}
-        <h3 className="text-base font-semibold leading-snug text-slate-900 group-hover:text-brand-teal-dark">
+        <Heading className="text-base font-semibold leading-snug text-slate-900 group-hover:text-brand-teal-dark">
           {product.name}
-        </h3>
+        </Heading>
         <p className="mt-auto text-lg font-bold text-slate-900">{formatPrice(product.price)}</p>
       </div>
     </Link>

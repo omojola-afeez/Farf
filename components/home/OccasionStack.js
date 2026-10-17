@@ -12,7 +12,7 @@ const CARDS = [
     text: 'Bags, lunch boxes, stationery and accessories, gathered in one list so nothing gets missed on the first morning.',
     tone: 'glass-teal text-white',
     top: 'top-44 lg:top-32',
-    muted: 'text-white/80',
+    muted: 'text-white',
   },
   {
     href: '/shop?occasion=new-apartment',
@@ -21,7 +21,7 @@ const CARDS = [
     text: 'Cookware, storage, cleaning basics and a few tools, so the first week in a new place is easier.',
     tone: 'bg-[#C2410C]/85 text-white border border-white/30 backdrop-blur-2xl shadow-2xl',
     top: 'top-48 lg:top-36',
-    muted: 'text-white/85',
+    muted: 'text-white',
   },
   {
     href: '/shop?occasion=weekend-fix',

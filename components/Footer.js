@@ -16,13 +16,13 @@ export default function Footer() {
           <ul className="space-y-2 text-sm">
             {categoryList.map((c) => (
               <li key={c.slug}>
-                <Link href={`/shop/${c.slug}`} className="hover:underline">
+                <Link href={`/shop/${c.slug}`} className="inline-flex min-h-[44px] items-center hover:underline">
                   {c.title}
                 </Link>
               </li>
             ))}
             <li>
-              <Link href="/shop" className="hover:underline">
+              <Link href="/shop" className="inline-flex min-h-[44px] items-center hover:underline">
                 All products
               </Link>
             </li>
@@ -31,23 +31,23 @@ export default function Footer() {
         <div>
           <h2 className="mb-3 text-base font-bold text-white">Help</h2>
           <ul className="space-y-2 text-sm">
-            <li><Link href="/track" className="hover:underline">Track your order</Link></li>
-            <li><Link href="/faq" className="hover:underline">FAQ</Link></li>
-            <li><Link href="/terms" className="hover:underline">Terms and returns</Link></li>
-            <li><Link href="/contact" className="hover:underline">Contact us</Link></li>
+            <li><Link href="/track" className="inline-flex min-h-[44px] items-center hover:underline">Track your order</Link></li>
+            <li><Link href="/faq" className="inline-flex min-h-[44px] items-center hover:underline">FAQ</Link></li>
+            <li><Link href="/terms" className="inline-flex min-h-[44px] items-center hover:underline">Terms and returns</Link></li>
+            <li><Link href="/contact" className="inline-flex min-h-[44px] items-center hover:underline">Contact us</Link></li>
           </ul>
         </div>
         <div>
           <h2 className="mb-3 text-base font-bold text-white">Company</h2>
           <ul className="space-y-2 text-sm">
-            <li><Link href="/about" className="hover:underline">About FARF</Link></li>
+            <li><Link href="/about" className="inline-flex min-h-[44px] items-center hover:underline">About FARF</Link></li>
             <li>
-              <a href={`mailto:${siteConfig.supportEmail}`} className="hover:underline">
+              <a href={`mailto:${siteConfig.supportEmail}`} className="inline-flex min-h-[44px] items-center hover:underline">
                 {siteConfig.supportEmail}
               </a>
             </li>
             <li>
-              <a href={`tel:+${siteConfig.whatsapp}`} className="hover:underline">
+              <a href={`tel:+${siteConfig.whatsapp}`} className="inline-flex min-h-[44px] items-center hover:underline">
                 {siteConfig.phone}
               </a>
             </li>
@@ -55,12 +55,10 @@ export default function Footer() {
           </ul>
         </div>
       </div>
-      <div className="relative z-10 border-t border-white/10 py-4 text-center text-sm text-slate-400">
+      <div className="relative z-10 border-t border-white/10 py-4 text-center text-sm text-slate-300">
         &copy; {new Date().getFullYear()} FARF. All rights reserved.
       </div>
-      <div className="watermark -mb-3 text-center font-extrabold" aria-hidden="true">
-        FARF
-      </div>
+      <div className="watermark -mb-3" aria-hidden="true" />
     </footer>
   );
 }

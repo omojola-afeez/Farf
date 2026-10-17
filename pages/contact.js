@@ -32,13 +32,13 @@ export default function Contact() {
       <div className="mx-auto my-10 w-[calc(100%-2rem)] glass-strong rounded-[2rem] p-6 sm:p-10 max-w-2xl">
         <h1 className="text-3xl">Contact us</h1>
         <p className="mt-2 text-lg text-slate-700">
-          Email <a className="font-semibold underline" href={`mailto:${siteConfig.supportEmail}`}>{siteConfig.supportEmail}</a> or
+          Email <a className="inline-block py-2.5 font-semibold underline" href={`mailto:${siteConfig.supportEmail}`}>{siteConfig.supportEmail}</a> or
           send a message below.
         </p>
         <ul className="mt-4 space-y-1 text-base text-slate-800">
           <li>
             Phone and WhatsApp:{' '}
-            <a className="font-semibold underline" href={`tel:+${siteConfig.whatsapp}`}>{siteConfig.phone}</a>
+            <a className="inline-block py-2.5 font-semibold underline" href={`tel:+${siteConfig.whatsapp}`}>{siteConfig.phone}</a>
           </li>
           <li>Address: {siteConfig.address}</li>
         </ul>

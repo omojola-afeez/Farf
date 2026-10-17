@@ -95,7 +95,7 @@ export default function Hero({ featured }) {
               needs, in one place.
             </h1>
 
-            <p className="mt-5 max-w-xl text-lg font-light text-white/85">
+            <p className="mt-5 max-w-xl text-lg font-light text-white">
               Kitchen tools, school supplies, DIY tools, gadgets and home utilities, priced in Naira and delivered across Nigeria.
             </p>
 
@@ -103,7 +103,7 @@ export default function Hero({ featured }) {
               <Link href="/shop" className="btn-primary">
                 Shop all products
               </Link>
-              <Link href="#occasions" className="btn border-2 border-white/50 text-white hover:bg-white/15">
+              <Link href="#occasions" className="btn border-2 border-white text-white hover:bg-white/15">
                 Shop by occasion
               </Link>
             </div>

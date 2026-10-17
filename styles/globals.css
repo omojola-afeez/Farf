@@ -73,7 +73,7 @@
     border: 1px solid rgba(255, 255, 255, 0.12);
   }
   .glass-teal {
-    background: rgba(15, 118, 110, 0.72);
+    background: rgba(13, 94, 88, 0.86);
     -webkit-backdrop-filter: blur(24px) saturate(170%);
     backdrop-filter: blur(24px) saturate(170%);
     border: 1px solid rgba(255, 255, 255, 0.25);
@@ -200,7 +200,11 @@
   z-index: 1;
 }
 
-.watermark {
+.watermark::after {
+  content: 'FARF';
+  display: block;
+  text-align: center;
+  font-weight: 800;
   font-size: 22vw;
   line-height: 0.8;
   letter-spacing: -0.04em;
@@ -215,5 +219,12 @@
   .animate-float-slow,
   .animate-glow {
     animation: none;
+  }
+}
+
+@media (min-width: 1024px) {
+  .filter-panel::details-content {
+    content-visibility: visible;
+    display: block;
   }
 }

@@ -26,10 +26,10 @@ export default function ShopView({ products, total, filters, basePath, title, in
   const category = filters.category ? categories[filters.category] : null;
   const panel = useRef(null);
 
-  // The filter panel is open in the HTML so it works without JS. On phones, collapse it so products come first.
+  // The panel renders closed so phones show products first with no layout shift. Desktop shows it open through CSS, and this opens it as a fallback.
   useEffect(() => {
-    if (panel.current && window.matchMedia('(max-width: 1023px)').matches) {
-      panel.current.open = false;
+    if (panel.current && window.matchMedia('(min-width: 1024px)').matches) {
+      panel.current.open = true;
     }
   }, []);
 
@@ -45,7 +45,7 @@ export default function ShopView({ products, total, filters, basePath, title, in
 
       <div className="container-page grid gap-8 py-8 lg:grid-cols-[260px_1fr]">
         <aside>
-          <details ref={panel} className="glass rounded-[1.75rem]" open>
+          <details ref={panel} className="glass filter-panel rounded-[1.75rem]">
             <summary className="flex min-h-[48px] cursor-pointer items-center px-4 text-base font-bold lg:pointer-events-none">
               Filters
             </summary>
@@ -136,7 +136,7 @@ export default function ShopView({ products, total, filters, basePath, title, in
             <ul className="grid grid-cols-2 gap-3 sm:gap-4 md:grid-cols-3">
               {products.map((p) => (
                 <li key={p._id}>
-                  <ProductCard product={p} />
+                  <ProductCard product={p} as="h2" />
                 </li>
               ))}
             </ul>

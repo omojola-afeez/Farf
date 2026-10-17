@@ -68,7 +68,7 @@ export default function CartPage() {
   return (
     <>
       <PageHead title="Your cart" />
-      <div className="container-page py-8">
+      <div className="container-page min-h-[75vh] py-8">
         <h1 className="text-3xl">Your cart</h1>
 
         {!ready ? (

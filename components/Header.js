@@ -75,7 +75,7 @@ export default function Header() {
 
         <nav className="hidden items-center gap-3 xl:flex" aria-label="Main">
           {navLinks.filter((l) => l.href !== '/track').map((l) => (
-            <Link key={l.href} href={l.href} className="whitespace-nowrap px-1 text-sm font-semibold text-slate-800 hover:text-brand-teal">
+            <Link key={l.href} href={l.href} className="whitespace-nowrap px-1 py-3 text-sm font-semibold text-slate-800 hover:text-brand-teal">
               {l.label}
             </Link>
           ))}

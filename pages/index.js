@@ -35,7 +35,7 @@ export default function Home({ featured }) {
         <section className="container-page py-12">
           <div className="mb-6 flex items-end justify-between gap-4">
             <h2 className="text-3xl font-semibold sm:text-4xl">Products to explore</h2>
-            <Link href="/shop" className="text-base font-semibold text-brand-teal-dark underline">
+            <Link href="/shop" className="inline-flex min-h-[44px] items-center text-base font-semibold text-brand-teal-dark underline">
               View all
             </Link>
           </div>
